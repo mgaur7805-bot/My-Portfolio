@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MG | Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050608;
+            --card-bg: linear-gradient(145deg, #0f131a, #0b0c10);
+            --text-main: #ffffff;
+            --text-sub: #aeb6bf;
+            --text-muted: #626a73;
+            --neon-accent: #ff4a4a; /* Admin Panel red theme for caution */
+            --neon-glow: rgba(255, 74, 74, 0.4);
+            --header-bg: rgba(11, 12, 16, 0.7);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --track-bg: #0f1219;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-sub);
+            padding: 20px;
+        }
+
+        header {
+            background: var(--header-bg);
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+            border-radius: 12px;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--neon-accent); 
+            text-shadow: 0 0 15px var(--neon-glow);
+        }
+
+        .admin-badge {
+            background: var(--neon-accent);
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            color: var(--text-main);
+            margin-bottom: 30px;
+        }
+
+        .cinematic-grid-track {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            width: 100%;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) { .cinematic-grid-track { grid-template-columns: 1fr; } }
+
+        .video-item {
+            background: var(--track-bg);
+            padding: 30px;
+            border-radius: 24px;
+            border: 2px dashed var(--border-color);
+            text-align: center;
+            height: 320px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+        }
+
+        .video-item.has-video {
+            height: auto;
+            min-height: 350px;
+            border-style: solid;
+            border-color: var(--neon-accent);
+            background: #020304;
+            padding: 20px;
+        }
+
+        .rendered-video {
+            width: 100%;
+            max-height: 400px;
+            border-radius: 14px;
+            background: #000;
+        }
+
+        .upload-btn {
+            background: linear-gradient(135deg, var(--neon-accent), #0072ff);
+            color: #fff;
+            width: 55px; height: 55px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; cursor: pointer; margin-bottom: 20px; border: none;
+            transition: 0.3s;
+        }
+
+        .upload-btn:hover { transform: scale(1.1); }
+        .hidden-input { display: none; }
+
+        .clear-video-btn {
+            position: absolute;
+            top: -12px; right: -12px;
+            background: #151a22;
+            color: #ff4a4a;
+            border: 1px solid rgba(255, 74, 74, 0.3);
+            width: 38px; height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            z-index: 10;
+        }
+
+        .clear-video-btn:hover { background: #ff4a4a; color: #fff; }
+
+        .save-banner {
+            background: rgba(255, 74, 74, 0.1);
+            border: 1px solid var(--neon-accent);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">MG CONTROL</div>
+        <div class="admin-badge">ADMIN MODE</div>
+    </header>
+
+    <div class="container">
+        <h1>Secret Media Dashboard</h1>
+        <div class="save-banner">
+            ⚠️ <strong>Kaise Kaam Karega:</strong> Yahan video upload karne ke baad woh aapke browser me save ho jayegi. Jab aap public link (index.html) kholenge, toh bina kisi upload button ke aapki videos wahan play hongi!
+        </div>
+
+        <div class="cinematic-grid-track">
+            <!-- Slot 1 -->
+            <div class="video-item" id="slot-1">
+                <button class="clear-video-btn" onclick="clearSlot('slot-1')">X</button>
+                <input type="file" id="input-1" class="hidden-input" accept="video/*" onchange="saveVideo(this, 'slot-1')">
+                <button class="upload-btn" onclick="document.getElementById('input-1').click()">+</button>
+                <p>Upload Video Track 1</p>
+            </div>
+
+            <!-- Slot 2 -->
+            <div class="video-item" id="slot-2">
+                <button class="clear-video-btn" onclick="clearSlot('slot-2')">X</button>
+                <input type="file" id="input-2" class="hidden-input" accept="video/*" onchange="saveVideo(this, 'slot-2')">
+                <button class="upload-btn" onclick="document.getElementById('input-2').click()">+</button>
+                <p>Upload Video Track 2</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadSavedVideos);
+
+        function saveVideo(input, slotId) {
+            const file = input.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const base64Video = e.target.result;
+                localStorage.setItem(slotId, base64Video);
+                localStorage.setItem(slotId + '-name', file.name);
+                renderVideo(slotId, base64Video, file.name);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function renderVideo(slotId, videoData, fileName) {
+            const container = document.getElementById(slotId);
+            container.classList.add('has-video');
+            container.innerHTML = `
+                <button class="clear-video-btn" onclick="clearSlot('${slotId}')">X</button>
+                <video class="rendered-video" controls autoplay muted loop>
+                    <source src="${videoData}">
+                </video>
+                <p style="margin-top:10px; color:var(--text-main); font-size:12px;">${fileName}</p>
+            `;
+        }
+
+        function clearSlot(slotId) {
+            localStorage.removeItem(slotId);
+            localStorage.removeItem(slotId + '-name');
+            location.reload();
+        }
+
+        function loadSavedVideos() {
+            ['slot-1', 'slot-2'].forEach(slotId => {
+                const savedData = localStorage.getItem(slotId);
+                const savedName = localStorage.getItem(slotId + '-name') || 'Video Asset';
+                if (savedData) {
+                    renderVideo(slotId, savedData, savedName);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
