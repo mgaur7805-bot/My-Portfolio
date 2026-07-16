@@ -6,8 +6,8 @@
     <title>MG | Luxury Cinematic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Sharp Professional Fonts for exact Premiere Editorial Finish -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- Ultra Sharp Tech & Editorial Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
     
     <!-- Firebase Realtime DB SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -15,133 +15,169 @@
 
     <style>
         :root {
-            --bg-color: #030406;
-            --card-bg: #070a0f; 
+            /* Premiere Pro Dark Slate + Production Suite Accents */
+            --bg-color: #0b0c10;
+            --panel-bg: #14171e;
             --text-main: #ffffff;
-            --text-sub: #8fa0b0;
-            --text-muted: #4e5763;
+            --text-sub: #94a3b8;
+            --premiere-purple: #9055ff;
+            --ae-indigo: #bb86fc;
             --neon-accent: #00f3ff;
-            --neon-glow: rgba(0, 243, 255, 0.35);
-            --header-bg: rgba(3, 4, 6, 0.85);
-            --border-color: rgba(0, 243, 255, 0.08);
-            --track-bg: #05080d;
+            --davinci-gold: #ffaa00;
+            --border-color: rgba(144, 85, 255, 0.15);
+            --track-bg: #0f1115;
         }
 
         [data-theme="light"] {
-            --bg-color: #f0f4f8;
-            --card-bg: #ffffff; 
-            --text-main: #050a12;
-            --text-sub: #2c3e50;
-            --text-muted: #7f8c8d;
-            --neon-accent: #0066ff;
-            --neon-glow: rgba(0, 102, 255, 0.25);
-            --header-bg: rgba(240, 244, 248, 0.9);
-            --border-color: rgba(0, 102, 255, 0.15);
-            --track-bg: #e6ebf3;
+            --bg-color: #f1f5f9;
+            --panel-bg: #ffffff; 
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --premiere-purple: #6366f1;
+            --ae-indigo: #4f46e5;
+            --neon-accent: #0284c7;
+            --davinci-gold: #d97706;
+            --border-color: rgba(0,0,0,0.08);
+            --track-bg: #e2e8f0;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-color); color: var(--text-sub); overflow-x: hidden; width: 100%; transition: background-color 0.4s; }
         h1, h2, h3, .intro-logo-box, .logo { font-family: 'Syne', sans-serif; font-weight: 800; text-transform: uppercase; }
 
-        /* Splash Screen Transition */
-        #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #020305; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        /* Welcome Splash Screen */
+        #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #07080a; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
         .splash-exit-animation { animation: curtainUpExit 0.7s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
         
-        .intro-logo-box { font-size: 85px; font-weight: 900; background: linear-gradient(45deg, #fff, var(--neon-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 5px; filter: drop-shadow(0 0 25px var(--neon-glow)); cursor: pointer; animation: logoBreathing 2.5s ease-in-out infinite alternate; }
+        .intro-logo-box { font-size: 85px; font-weight: 900; background: linear-gradient(45deg, #fff, var(--premiere-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 2px; filter: drop-shadow(0 0 25px rgba(144, 85, 255, 0.4)); cursor: pointer; animation: logoBreathing 2.5s ease-in-out infinite alternate; }
         .intro-welcome-text { margin-top: 20px; font-size: 11px; font-weight: 600; letter-spacing: 4px; color: #fff; text-transform: uppercase; text-align: center; opacity: 0.8; }
         .click-instruction { margin-top: 25px; font-size: 9px; font-weight: 600; letter-spacing: 3px; color: var(--neon-accent); text-transform: uppercase; animation: flashEffect 1.5s infinite; }
 
-        header { background: var(--header-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 28px; font-weight: 900; color: var(--neon-accent); letter-spacing: 1px; cursor: pointer; text-shadow: 0 0 12px var(--neon-glow); }
+        header { background: rgba(11, 12, 16, 0.85); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 28px; font-weight: 900; color: #fff; letter-spacing: 1px; cursor: pointer; }
+        .logo span { color: var(--premiere-purple); }
         
         .theme-switch { display: inline-block; height: 24px; position: relative; width: 46px; }
         .theme-switch input { display:none; }
-        .slider { background-color: #0d121c; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; border: 1px solid var(--border-color); }
-        .slider:before { background-color: var(--neon-accent); bottom: 3px; content: ""; height: 16px; left: 4px; position: absolute; transition: .4s; width: 16px; border-radius: 50%; }
+        .slider { background-color: #1a1d24; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; border: 1px solid var(--border-color); }
+        .slider:before { background-color: var(--premiere-purple); bottom: 3px; content: ""; height: 16px; left: 4px; position: absolute; transition: .4s; width: 16px; border-radius: 50%; }
         input:checked + .slider { background-color: #fff; }
         input:checked + .slider:before { transform: translateX(22px); background-color: #0066ff; }
 
-        .hero { padding: 80px 20px 60px 20px; text-align: center; position: relative; max-width: 1200px; margin: 0 auto; }
+        /* Production Monitor Interface Look */
+        .hero { padding: 90px 20px 60px 20px; text-align: center; position: relative; max-width: 1200px; margin: 0 auto; }
         
-        /* Double Color Restored with original premium look */
-        .hero h1 { font-size: 42px; margin-bottom: 24px; font-weight: 900; letter-spacing: -1.5px; line-height: 1.1; color: #ffffff; }
+        /* FIXED: Heavy Double Color Studio Font Face Setup */
+        .hero h1 { font-size: 42px; margin-bottom: 15px; font-weight: 900; letter-spacing: -2px; line-height: 1.05; color: #ffffff; }
         @media(min-width: 768px) { .hero h1 { font-size: 85px; } }
-        .hero h1 span { background: linear-gradient(90deg, #ffffff 40%, var(--neon-accent) 60%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 30px rgba(0, 243, 255, 0.25)); }
+        .hero h1 span { background: linear-gradient(90deg, #ffffff 45%, var(--premiere-purple) 55%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .story-container { max-width: 850px; margin: 0 auto 35px auto; padding: 10px; line-height: 1.8; font-size: 15px; color: var(--text-sub); text-align: center; font-weight: 400; }
-        @media(min-width: 768px) { .story-container { font-size: 20px; line-height: 1.9; } }
-        .motion-word { display: inline-block; transition: 0.25s cubic-bezier(0.2, 1, 0.2, 1); }
-        .motion-word:hover { color: var(--neon-accent); text-shadow: 0 0 10px var(--neon-accent); transform: scale(1.12) translateY(-2px); }
-        
+        /* Software Badges Sub-Bar */
+        .software-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 35px; }
+        .software-tag { font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 1px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+        .tag-pr { border-color: #ea77ff; color: #ea77ff; }
+        .tag-ae { border-color: #9c9eff; color: #9c9eff; }
+        .tag-dv { border-color: #ffb834; color: #ffb834; }
+        .tag-il { border-color: #ff9a00; color: #ff9a00; }
+        .tag-cr { border-color: #00ca6d; color: #00ca6d; }
+
+        .story-container { max-width: 850px; margin: 0 auto 40px auto; padding: 15px; line-height: 1.8; font-size: 15px; color: var(--text-sub); text-align: center; background: rgba(20, 23, 30, 0.4); border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); }
+        @media(min-width: 768px) { .story-container { font-size: 19px; line-height: 1.9; } }
+        .motion-word { display: inline-block; transition: 0.2s; }
+        .motion-word:hover { color: var(--neon-accent); transform: scale(1.1) translateY(-1px); }
         .highlight-punch { color: var(--text-main); font-weight: 700; }
 
-        .explore-trigger-btn { background: transparent; color: var(--neon-accent); border: 2px solid var(--neon-accent); padding: 15px 40px; font-size: 12px; font-weight: 700; letter-spacing: 2px; border-radius: 50px; cursor: pointer; margin: 15px auto; display: block; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); outline: none; box-shadow: 0 0 15px rgba(0, 243, 255, 0.1); }
-        .explore-trigger-btn:hover { background: var(--neon-accent); color: #030406; box-shadow: 0 0 35px var(--neon-glow); transform: translateY(-3px); }
+        .explore-trigger-btn { background: var(--premiere-purple); color: #fff; border: none; padding: 16px 42px; font-size: 12px; font-weight: 700; letter-spacing: 2px; border-radius: 8px; cursor: pointer; margin: 15px auto; display: block; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); outline: none; box-shadow: 0 4px 20px rgba(144, 85, 255, 0.3); text-transform: uppercase; }
+        .explore-trigger-btn:hover { background: #ffffff; color: #0b0c10; box-shadow: 0 0 30px rgba(255,255,255,0.2); transform: translateY(-2px); }
 
         .work-categories-section, .separate-timeline-view { padding: 40px 15px; display: none; opacity: 0; transform: translateY(30px); }
         .active-frame { display: block; animation: activeIntroFrame 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         
-        .section-title { font-size: 28px; margin-bottom: 35px; text-align: center; font-weight: 800; letter-spacing: -1px; color: #ffffff; }
+        .section-title { font-size: 28px; margin-bottom: 45px; text-align: center; font-weight: 800; letter-spacing: -1px; color: #ffffff; }
         @media(min-width: 768px) { .section-title { font-size: 42px; } }
-        .section-title span { background: linear-gradient(90deg, #ffffff 30%, var(--neon-accent) 70%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-title span { background: linear-gradient(90deg, #ffffff 40%, var(--premiere-purple) 60%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .nav-btn { background: rgba(255, 255, 255, 0.02); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 22px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; border-radius: 30px; cursor: pointer; margin-bottom: 30px; transition: 0.3s; text-transform: uppercase; }
-        .nav-btn:hover { background: rgba(0, 243, 255, 0.1); border-color: var(--neon-accent); }
+        .nav-btn { background: rgba(255, 255, 255, 0.02); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 22px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; border-radius: 6px; cursor: pointer; margin-bottom: 30px; transition: 0.3s; text-transform: uppercase; }
+        .nav-btn:hover { background: rgba(144, 85, 255, 0.15); border-color: var(--premiere-purple); }
         
-        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1150px; margin: 0 auto; }
-        @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; } }
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 1150px; margin: 0 auto; }
+        @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; } }
         
+        /* FIXED: 3 Main Workspace Cards with Rich Ambient Cinematic Grow Glow */
         .box-card { 
-            background: var(--card-bg); 
-            border-radius: 24px; 
-            padding: 40px 25px; 
-            border: 1px solid rgba(0, 243, 255, 0.15); 
+            background: var(--panel-bg); 
+            border-radius: 16px; 
+            padding: 45px 25px; 
+            border: 1px solid rgba(255,255,255,0.04); 
             text-align: center; 
             cursor: pointer; 
-            min-height: 290px; 
+            min-height: 300px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
             position: relative;
-            box-shadow: 0 10px 40px rgba(0, 243, 255, 0.08);
+            overflow: hidden;
         }
+        /* Ambient Background Light Engine */
+        .box-card::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 140px;
+            height: 140px;
+            background: radial-gradient(circle, var(--premiere-purple) 0%, transparent 70%);
+            opacity: 0;
+            transform: translate(-50%, -50%) scale(0.6);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 1;
+            pointer-events: none;
+        }
+        .box-card:nth-child(2)::before { background: radial-gradient(circle, var(--ae-indigo) 0%, transparent 70%); }
+        .box-card:nth-child(3)::before { background: radial-gradient(circle, var(--davinci-gold) 0%, transparent 70%); }
+
         .box-card:hover { 
-            border-color: var(--neon-accent); 
+            border-color: rgba(255,255,255,0.12);
             transform: translateY(-8px); 
-            box-shadow: 0 25px 60px rgba(0, 243, 255, 0.25); 
+        }
+        /* Activating Cinematic Glow Expansion on Hover */
+        .box-card:hover::before {
+            opacity: 0.35;
+            width: 100%;
+            height: 100%;
+            transform: translate(-50%, -50%) scale(1.5);
         }
         
-        .box-icon { font-size: 46px; margin-bottom: 20px; display: inline-block; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-        .box-card:hover .box-icon { transform: scale(1.25) rotate(-3deg); filter: drop-shadow(0 0 12px var(--neon-accent)); }
+        .box-icon { font-size: 46px; margin-bottom: 20px; display: inline-block; transition: transform 0.4s ease; z-index: 2; }
+        .box-card:hover .box-icon { transform: scale(1.18); }
         
-        .box-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px; }
-        .box-card p { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; text-transform: none; }
+        .box-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px; z-index: 2; }
+        .box-card p { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; text-transform: none; z-index: 2; }
 
         .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 25px; width: 100%; max-width: 1050px; margin: 0 auto; }
         @media(min-width: 768px) { .cinematic-grid-track { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
 
-        .video-item { background: var(--track-bg); padding: 18px; border-radius: 28px; border: 1px solid var(--border-color); transition: 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
-        .video-item:hover { border-color: rgba(0, 243, 255, 0.25); }
+        .video-item { background: var(--panel-bg); padding: 18px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); transition: 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .video-item:hover { border-color: var(--premiere-purple); }
         
-        .media-frame-container { position: relative; width: 100%; padding-bottom: 130%; height: 0; overflow: hidden; border-radius: 18px; background: #010203; border: 1px solid rgba(255,255,255,0.05); }
+        .media-frame-container { position: relative; width: 100%; padding-bottom: 130%; height: 0; overflow: hidden; border-radius: 12px; background: #000000; }
         .media-frame-container.landscape-mode { padding-bottom: 56.25% !important; }
         .media-frame-container iframe, .media-frame-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; display: block; }
 
-        .retention-dashboard { width: 100%; background: rgba(5, 8, 14, 0.6); border-radius: 14px; padding: 14px; margin-top: 14px; border: 1px solid var(--border-color); }
-        .retention-title { font-size: 10px; color: var(--neon-accent); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
+        .retention-dashboard { width: 100%; background: rgba(0,0,0,0.2); border-radius: 10px; padding: 14px; margin-top: 14px; border: 1px solid rgba(255,255,255,0.04); }
+        .retention-title { font-size: 10px; color: var(--premiere-purple); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
         .retention-graph-svg { width: 100%; height: 40px; }
-        .retention-path { stroke: var(--neon-accent); stroke-width: 2.5; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; animation: traceGraphMetrics 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .retention-path { stroke: var(--premiere-purple); stroke-width: 2.5; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; animation: traceGraphMetrics 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
-        @keyframes logoBreathing { 0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.3)); } 100% { transform: scale(1.04); filter: drop-shadow(0 0 25px rgba(0, 243, 255, 0.6)); } }
+        @keyframes logoBreathing { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
         @keyframes flashEffect { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
         @keyframes curtainUpExit { to { transform: translateY(-100%); opacity: 0; } }
         @keyframes activeIntroFrame { to { opacity: 1; transform: translateY(0); } }
         @keyframes traceGraphMetrics { to { stroke-dashoffset: 0; } }
 
-        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-color); margin-top: 80px; letter-spacing: 0.5px; }
+        footer { text-align: center; padding: 40px 20px; color: #4e5763; font-size: 13px; border-top: 1px solid var(--border-color); margin-top: 80px; letter-spacing: 0.5px; }
     </style>
 </head>
 <body>
@@ -149,12 +185,12 @@
     <!-- Overlay Loading Sequence -->
     <div id="welcome-splash-overlay">
         <div class="intro-logo-box" onclick="exitWelcomeIntro()">MG</div>
-        <div class="intro-welcome-text">Premium Production Space</div>
-        <div class="click-instruction">Click MG Logo to Enter</div>
+        <div class="intro-welcome-text">Production Space Initialized</div>
+        <div class="click-instruction">Click MG to Enter Workspace</div>
     </div>
 
     <header>
-        <div class="logo" onclick="triggerCinematicSound()">MG</div>
+        <div class="logo" onclick="triggerCinematicSound()">MG <span>Studio</span></div>
         <label class="theme-switch">
             <input type="checkbox" onchange="toggleLuxuryTheme(this); triggerCinematicSound();" />
             <div class="slider"></div>
@@ -163,15 +199,25 @@
 
     <section class="hero" id="home-section">
         <h1>Hi, I am <span>Mohit Gaur</span></h1>
+        
+        <!-- Software Track Bar Indicator -->
+        <div class="software-bar">
+            <span class="software-tag tag-pr">Premiere Pro</span>
+            <span class="software-tag tag-ae">After Effects</span>
+            <span class="software-tag tag-dv">DaVinci Resolve</span>
+            <span class="software-tag tag-il">Illustrator</span>
+            <span class="software-tag tag-cr">CorelDraw</span>
+        </div>
+
         <div class="story-container" id="interactive-story-box">
             Ek Editor Ki Life Ek Blank Timeline Se Shuru Hoti Hai. Shuruat Ka Bura Time, Woh Systems Ka Lag Hona, Client Ke Endless Revisions Aur Sleepless Nights Ka Struggle... Har Ek Cut Mein Ek Sapna Chhupa Hota Hai. Par Sach Batayein? Usi Halke Andhere Aur Complex Timelines Se Guzar Kar Hi Real High-Retention Storytelling Seekhi Jati Hai. Aaj Mushkilon Ko Piche Chhod Kar, Raw Footage Ko Cinematic Masterpiece Mein Badalna Hi Hamari Pehchan Ban Chuki Hai. If You Can Imagine It, We Can Execute It With Precision. Mehnat Se Lekar Perfection Tak Ka Yeh Safar Hi Asli Growth Hai!
         </div>
-        <button class="explore-trigger-btn" onclick="revealCategories(); triggerCinematicSound();">EXPLORE MY WORK</button>
+        <button class="explore-trigger-btn" onclick="revealCategories(); triggerCinematicSound();">Open Timelines</button>
     </section>
 
     <section class="work-categories-section" id="categories-section">
-        <button class="nav-btn" onclick="goBackToHome(); triggerCinematicSound();">← Return Home</button>
-        <h2 class="section-title">Select <span>Expertise Track</span></h2>
+        <button class="nav-btn" onclick="goBackToHome(); triggerCinematicSound();">← Close Timeline</button>
+        <h2 class="section-title">Select <span>Production Track</span></h2>
         <div class="categories-grid">
             <div class="box-card" onclick="openTimeline('edit', 'Video Editing'); triggerCinematicSound();">
                 <div class="box-icon">🎬</div>
@@ -198,7 +244,7 @@
     </section>
 
     <footer>
-        <p>Direct Line / WhatsApp: <strong style="color:var(--neon-accent);">+91 9911599532</strong></p>
+        <p>Direct Line / WhatsApp: <strong style="color:var(--premiere-purple);">+91 9911599532</strong></p>
     </footer>
 
     <script>
@@ -226,16 +272,16 @@
                 let gain = audioCtx.createGain();
                 
                 osc.type = 'sine'; 
-                osc.frequency.setValueAtTime(550, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(70, audioCtx.currentTime + 0.12);
+                osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.15);
                 
-                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
                 
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.12);
+                osc.stop(audioCtx.currentTime + 0.15);
             } catch(e) { console.log("Audio contextual block overridden."); }
         }
 
@@ -287,11 +333,7 @@
                 let shortcode = '';
                 let idx = parts.findIndex(p => p === 'reel' || p === 'p' || p === 'tv');
                 
-                if(idx !== -1 && parts[idx+1]) {
-                    shortcode = parts[idx+1];
-                } else {
-                    shortcode = parts[parts.length - 1];
-                }
+                if(idx !== -1 && parts[idx+1]) { shortcode = parts[idx+1]; } else { shortcode = parts[parts.length - 1]; }
                 
                 embedCode = `<iframe src="https://www.instagram.com/p/${shortcode}/embed/" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true" style="width:100%; height:100%;"></iframe>`;
                 return { html: embedCode, type: 'reel-mode' };
