@@ -8,13 +8,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
+    <!-- Firebase Realtime DB SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         :root {
             --bg-color: #030406;
-            --card-bg: #070a0f; /* Pure Clean Solid Luxury Dark */
+            --card-bg: #070a0f; 
             --text-main: #ffffff;
             --text-sub: #8fa0b0;
             --text-muted: #4e5763;
@@ -27,7 +28,7 @@
 
         [data-theme="light"] {
             --bg-color: #f0f4f8;
-            --card-bg: #ffffff; /* Solid Pure White for light mode */
+            --card-bg: #ffffff; 
             --text-main: #050a12;
             --text-sub: #2c3e50;
             --text-muted: #7f8c8d;
@@ -41,6 +42,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-color); color: var(--text-sub); overflow-x: hidden; width: 100%; transition: background-color 0.4s; }
         h1, h2, h3, .intro-logo-box, .logo { font-family: 'Syne', sans-serif; color: var(--text-main); }
+
+        /* FIXED: Cyber line pattern block completely deleted to ensure 100% crisp video output */
 
         /* Cinematic Overlay Screen */
         #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #020305; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
@@ -88,7 +91,6 @@
         .categories-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1150px; margin: 0 auto; }
         @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; } }
         
-        /* FIXED: Linear-Gradient completely removed for a sleek pure solid look */
         .box-card { 
             background: var(--card-bg); 
             border-radius: 24px; 
@@ -111,7 +113,6 @@
             box-shadow: 0 25px 60px rgba(0, 243, 255, 0.35); 
         }
         
-        /* Premium Floating Icons */
         .box-icon { font-size: 46px; margin-bottom: 20px; display: inline-block; position: relative; transform-style: preserve-3d; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
         
         .categories-grid .box-card:nth-child(1) .box-icon { animation: premiumFloatOne 4s ease-in-out infinite alternate; }
@@ -123,15 +124,12 @@
         .box-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px; }
         .box-card p { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; }
 
-        /* Media Track Grid Setup */
         .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 25px; width: 100%; max-width: 1050px; margin: 0 auto; }
         @media(min-width: 768px) { .cinematic-grid-track { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
 
-        /* Video Slots: Solid Backgrounds and Clear Render */
         .video-item { background: var(--track-bg); padding: 18px; border-radius: 28px; border: 1px solid var(--border-color); transition: 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
         .video-item:hover { border-color: rgba(0, 243, 255, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
         
-        /* Revamped & Fixed Media Frame */
         .media-frame-container { position: relative; width: 100%; padding-bottom: 130%; height: 0; overflow: hidden; border-radius: 18px; background: #010203; border: 1px solid rgba(255,255,255,0.05); }
         .media-frame-container.landscape-mode { padding-bottom: 56.25% !important; }
         .media-frame-container iframe, .media-frame-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; display: block; }
@@ -156,6 +154,7 @@
 </head>
 <body>
 
+    <!-- Overlay Loading Sequence -->
     <div id="welcome-splash-overlay">
         <div class="intro-logo-box" onclick="exitWelcomeIntro()">MG</div>
         <div class="intro-welcome-text">Welcome To The Creative Realm</div>
