@@ -2,12 +2,13 @@
 <html lang="hi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MG | Luxury Cinematic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
+    <!-- Firebase Realtime DB SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
@@ -40,80 +41,102 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
 
-        #custom-cursor { width: 20px; height: 20px; border: 2px solid var(--neon-accent); border-radius: 50%; position: fixed; transform: translate(-50%, -50%); pointer-events: none; z-index: 10000; transition: width 0.3s, height 0.3s, background-color 0.3s; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #050608; font-weight: bold; overflow: hidden; }
-        @media (max-width: 1024px) { #custom-cursor { display: none !important; } }
-        #custom-cursor.hovered { width: 60px; height: 60px; background-color: var(--neon-accent); border-color: var(--neon-accent); }
-
-        body { background-color: var(--bg-color); color: var(--text-sub); overflow-x: hidden; transition: background-color 0.5s ease; }
+        body { background-color: var(--bg-color); color: var(--text-sub); overflow-x: hidden; transition: background-color 0.5s ease; width: 100%; }
         h1, h2, h3, .intro-logo-box, .logo { font-family: 'Syne', sans-serif; color: var(--text-main); }
 
-        #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #030406; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-        .splash-exit-animation { animation: curtainUpExit 1s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
-        .intro-logo-box { font-size: 100px; font-weight: 900; background: linear-gradient(45deg, #ffffff, #45f3ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 6px; filter: drop-shadow(0 0 35px rgba(69, 243, 255, 0.6)); cursor: pointer; animation: logoPulse 2s ease-in-out infinite alternate; }
-        .intro-welcome-text { margin-top: 30px; font-size: 16px; font-weight: 600; letter-spacing: 6px; color: #ffffff; text-transform: uppercase; }
-        .click-instruction { margin-top: 20px; font-size: 11px; font-weight: 600; letter-spacing: 4px; color: #45f3ff; text-transform: uppercase; animation: textBlink 1.5s ease-in-out infinite; }
-
-        header { background: var(--header-bg); backdrop-filter: blur(20px); padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 32px; font-weight: 800; color: var(--neon-accent); letter-spacing: 2px; cursor: pointer; text-shadow: 0 0 15px var(--neon-glow); }
+        /* Splash Screen Responsive Fix */
+        #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #030406; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
+        .splash-exit-animation { animation: curtainUpExit 0.8s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
         
-        .theme-switch { display: inline-block; height: 26px; position: relative; width: 50px; }
+        /* MG LOGO MOTION & GLOW ANIMATION */
+        .intro-logo-box { font-size: 70px; font-weight: 900; background: linear-gradient(45deg, #ffffff, #45f3ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 4px; filter: drop-shadow(0 0 20px rgba(69, 243, 255, 0.6)); cursor: pointer; animation: logoPulse 2s ease-in-out infinite alternate, logoGlowShift 4s ease-in-out infinite alternate; transition: transform 0.3s ease; }
+        .intro-logo-box:hover { transform: scale(1.1); }
+        @media (min-width: 768px) { .intro-logo-box { font-size: 110px; letter-spacing: 6px; } }
+        
+        .intro-welcome-text { margin-top: 25px; font-size: 12px; font-weight: 600; letter-spacing: 3px; color: #ffffff; text-transform: uppercase; padding: 0 10px; line-height: 1.4; }
+        @media (min-width: 768px) { .intro-welcome-text { font-size: 16px; letter-spacing: 6px; } }
+        
+        .click-instruction { margin-top: 20px; font-size: 10px; font-weight: 600; letter-spacing: 2px; color: #45f3ff; text-transform: uppercase; animation: textBlink 1.5s ease-in-out infinite; }
+
+        header { background: var(--header-bg); backdrop-filter: blur(20px); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 26px; font-weight: 800; color: var(--neon-accent); letter-spacing: 1px; cursor: pointer; text-shadow: 0 0 10px var(--neon-glow); }
+        
+        .theme-switch { display: inline-block; height: 24px; position: relative; width: 46px; }
         .theme-switch input { display:none; }
         .slider { background-color: #151a22; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; border: 1px solid var(--border-color); }
-        .slider:before { background-color: var(--neon-accent); bottom: 3px; content: ""; height: 18px; left: 4px; position: absolute; transition: .4s; width: 18px; border-radius: 50%; }
+        .slider:before { background-color: var(--neon-accent); bottom: 3px; content: ""; height: 16px; left: 4px; position: absolute; transition: .4s; width: 16px; border-radius: 50%; }
         input:checked + .slider { background-color: #ffffff; }
         input:checked + .slider:before { transform: translateX(22px); background-color: #0072ff; }
 
-        .hero { padding: 100px 5%; text-align: center; background: radial-gradient(circle at center, var(--track-bg) 0%, var(--bg-color) 100%); }
-        .hero h1 { font-size: 42px; margin-bottom: 20px; font-weight: 800; }
+        .hero { padding: 60px 20px; text-align: center; background: radial-gradient(circle at center, var(--track-bg) 0%, var(--bg-color) 100%); }
+        .hero h1 { font-size: 36px; margin-bottom: 15px; font-weight: 800; line-height: 1.2; word-wrap: break-word; }
         @media (min-width: 768px) { .hero h1 { font-size: 75px; } }
         .hero h1 span { background: linear-gradient(90deg, var(--neon-accent), #0072ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        .story-container { max-width: 900px; margin: 0 auto 40px auto; padding: 15px; line-height: 1.8; font-size: 16px; }
+        .story-container { max-width: 900px; margin: 0 auto 30px auto; padding: 10px; line-height: 1.6; font-size: 14px; word-wrap: break-word; }
         @media (min-width: 768px) { .story-container { font-size: 21px; line-height: 2; } }
-        .motion-word { display: inline-block; cursor: pointer; padding: 0 3px; transition: 0.3s; }
-        .motion-word:hover { color: var(--neon-accent); text-shadow: 0 0 15px var(--neon-accent); transform: translateY(-5px) scale(1.15); }
+        .motion-word { display: inline-block; cursor: pointer; padding: 0 2px; transition: 0.3s; }
+        .motion-word:hover { color: var(--neon-accent); text-shadow: 0 0 15px var(--neon-accent); transform: translateY(-3px) scale(1.1); }
         .highlight-punch { color: var(--text-main); font-weight: 600; border-bottom: 2px solid var(--neon-accent); }
 
-        .explore-trigger-btn { background: transparent; color: var(--neon-accent); border: 2px solid var(--neon-accent); padding: 16px 36px; font-size: 16px; font-weight: 700; letter-spacing: 2px; border-radius: 50px; cursor: pointer; margin: 20px auto; display: block; transition: 0.4s; }
-        .explore-trigger-btn:hover { background: linear-gradient(90deg, var(--neon-accent), #0072ff); color: #050608; border-color: transparent; box-shadow: 0 0 40px var(--neon-glow); transform: translateY(-3px); }
+        .explore-trigger-btn { background: transparent; color: var(--neon-accent); border: 2px solid var(--neon-accent); padding: 14px 28px; font-size: 14px; font-weight: 700; letter-spacing: 1px; border-radius: 50px; cursor: pointer; margin: 15px auto; display: block; transition: 0.4s; outline: none; }
+        .explore-trigger-btn:hover { background: linear-gradient(90deg, var(--neon-accent), #0072ff); color: #050608; border-color: transparent; box-shadow: 0 0 30px var(--neon-glow); transform: translateY(-2px); }
 
-        .work-categories-section, .separate-timeline-view { padding: 60px 5%; display: none; opacity: 0; transform: translateY(30px); }
-        .active-frame { display: block; animation: cinematicFadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-        .section-title { font-size: 32px; margin-bottom: 40px; text-align: center; font-weight: 800; }
+        .work-categories-section, .separate-timeline-view { padding: 40px 20px; display: none; opacity: 0; transform: translateY(20px); }
+        .active-frame { display: block; animation: cinematicFadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        .section-title { font-size: 26px; margin-bottom: 30px; text-align: center; font-weight: 800; width: 100%; line-height: 1.3; }
+        @media (min-width: 768px) { .section-title { font-size: 38px; } }
         .section-title span { color: var(--neon-accent); }
 
-        .nav-btn { background: rgba(255, 255, 255, 0.03); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px 24px; font-size: 14px; border-radius: 30px; cursor: pointer; margin-bottom: 30px; }
+        .nav-btn { background: rgba(255, 255, 255, 0.03); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 20px; font-size: 13px; border-radius: 30px; cursor: pointer; margin-bottom: 25px; transition: 0.3s; }
+        .nav-btn:hover { background: rgba(255,255,255,0.1); }
         
-        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; max-width: 1200px; margin: 0 auto; }
-        .box-card { background: var(--card-bg); border-radius: 24px; padding: 40px 20px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.5s; }
-        .box-card:hover { border-color: var(--neon-accent); transform: translateY(-12px); box-shadow: 0 30px 60px var(--neon-glow); }
-        .box-icon { font-size: 40px; margin-bottom: 20px; }
+        /* RESPONSIVE EXPERTISE CARDS WITH FLOATING MOTION */
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 10px; }
+        @media (min-width: 768px) { .categories-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; } }
+        
+        .box-card { background: var(--card-bg); border-radius: 24px; padding: 30px 20px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s, box-shadow 0.4s; }
+        
+        /* Continuous Smooth Motion for Cards */
+        .categories-grid .box-card:nth-child(1) { animation: floatMotionOne 5s ease-in-out infinite alternate; }
+        .categories-grid .box-card:nth-child(2) { animation: floatMotionTwo 6s ease-in-out infinite alternate; }
+        .categories-grid .box-card:nth-child(3) { animation: floatMotionThree 5.5s ease-in-out infinite alternate; }
+        
+        .box-card:hover { border-color: var(--neon-accent); transform: translateY(-8px) scale(1.03) !important; box-shadow: 0 20px 40px var(--neon-glow); z-index: 2; }
+        .box-icon { font-size: 36px; margin-bottom: 15px; }
+        .box-card h3 { font-size: 20px; margin-bottom: 10px; }
+        .box-card p { font-size: 13px; color: var(--text-sub); line-height: 1.5; }
 
-        .cinematic-grid-track { display: grid; grid-template-columns: repeat(2, 1fr); gap: 25px; width: 100%; max-width: 1100px; margin: 0 auto; }
-        @media (max-width: 768px) { .cinematic-grid-track { grid-template-columns: 1fr; } }
+        .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; max-width: 1100px; margin: 0 auto; }
+        @media (min-width: 768px) { .cinematic-grid-track { grid-template-columns: repeat(2, 1fr); gap: 25px; } }
 
-        .video-item { background: var(--track-bg); padding: 20px; border-radius: 24px; border: 1px solid var(--border-color); text-align: center; }
+        .video-item { background: var(--track-bg); padding: 15px; border-radius: 24px; border: 1px solid var(--border-color); text-align: center; }
         
         .media-frame-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 14px; background: #000; }
         .media-frame-container iframe, .media-frame-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-        .retention-dashboard { width: 100%; background: #0e121a; border-radius: 12px; padding: 15px; margin-top: 15px; border: 1px solid rgba(69, 243, 255, 0.1); text-align: left; }
-        .retention-title { font-size: 11px; color: var(--neon-accent); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
-        .retention-graph-svg { width: 100%; height: 40px; }
+        .retention-dashboard { width: 100%; background: #0e121a; border-radius: 12px; padding: 12px; margin-top: 12px; border: 1px solid rgba(69, 243, 255, 0.1); text-align: left; }
+        .retention-title { font-size: 10px; color: var(--neon-accent); text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+        .retention-graph-svg { width: 100%; height: 35px; }
         .retention-path { stroke: var(--neon-accent); stroke-width: 2; fill: none; stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawGraph 2s forwards; }
 
-        @keyframes logoPulse { 0% { transform: scale(1); } 100% { transform: scale(1.04); } }
+        /* Keyframes for Smooth Motion Styles */
+        @keyframes logoPulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+        @keyframes logoGlowShift { 0% { filter: drop-shadow(0 0 15px rgba(69, 243, 255, 0.5)); } 100% { filter: drop-shadow(0 0 30px rgba(0, 114, 255, 0.8)); } }
         @keyframes textBlink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
         @keyframes curtainUpExit { to { transform: translateY(-100%); opacity: 0; } }
         @keyframes cinematicFadeIn { to { opacity: 1; transform: translateY(0); } }
         @keyframes drawGraph { to { stroke-dashoffset: 0; } }
 
-        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 14px; border-top: 1px solid var(--border-color); margin-top: 80px; }
+        /* Floating Motion Frames for Track Cards */
+        @keyframes floatMotionOne { 0% { transform: translateY(0px); } 100% { transform: translateY(-6px); } }
+        @keyframes floatMotionTwo { 0% { transform: translateY(-4px); } 100% { transform: translateY(3px); } }
+        @keyframes floatMotionThree { 0% { transform: translateY(2px); } 100% { transform: translateY(-5px); } }
+
+        footer { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-color); margin-top: 60px; }
     </style>
 </head>
 <body>
-
-    <div id="custom-cursor"></div>
 
     <div id="welcome-splash-overlay">
         <div class="intro-logo-box" onclick="exitWelcomeIntro()">MG</div>
@@ -122,9 +145,9 @@
     </div>
 
     <header>
-        <div class="logo">MG</div>
+        <div class="logo" onclick="playClickSound()">MG</div>
         <label class="theme-switch">
-            <input type="checkbox" onchange="toggleLuxuryTheme(this)" />
+            <input type="checkbox" onchange="toggleLuxuryTheme(this); playClickSound();" />
             <div class="slider"></div>
         </label>
     </header>
@@ -134,24 +157,24 @@
         <div class="story-container" id="interactive-story-box">
             Ek Editor Ki Life Ek Blank Timeline Se Shuru Hoti Hai. Shuruat Ka Bura Time, Woh Systems Ka Lag Hona, Client Ke Endless Revisions Aur Sleepless Nights Ka Struggle... Har Ek Cut Mein Ek Sapna Chhupa Hota Hai. Par Sach Batayein? Usi Halke Andhere Aur Complex Timelines Se Guzar Kar Hi Real High-Retention Storytelling Seekhi Jati Hai. Aaj Mushkilon Ko Piche Chhod Kar, Raw Footage Ko Cinematic Masterpiece Mein Badalna Hi Hamari Pehchan Ban Chuki Hai. If You Can Imagine It, We Can Execute It With Precision. Mehnat Se Lekar Perfection Tak Ka Yeh Safar Hi Asli Growth Hai!
         </div>
-        <button class="explore-trigger-btn" onclick="revealCategories()">EXPLORE MY WORK</button>
+        <button class="explore-trigger-btn" onclick="revealCategories(); playClickSound();">EXPLORE MY WORK</button>
     </section>
 
     <section class="work-categories-section" id="categories-section">
-        <button class="nav-btn" onclick="goBackToHome()">← Back</button>
+        <button class="nav-btn" onclick="goBackToHome(); playClickSound();">← Back</button>
         <h2 class="section-title">Select <span>Expertise Track</span></h2>
         <div class="categories-grid">
-            <div class="box-card" onclick="openTimeline('edit', 'Video Editing')">
+            <div class="box-card" onclick="openTimeline('edit', 'Video Editing'); playClickSound();">
                 <div class="box-icon">🎬</div>
                 <h3>Video Editing</h3>
                 <p>High frame-rate cutting, professional speed ramping, and high-end sound design.</p>
             </div>
-            <div class="box-card" onclick="openTimeline('story', 'Digital Storytelling')">
+            <div class="box-card" onclick="openTimeline('story', 'Digital Storytelling'); playClickSound();">
                 <div class="box-icon">🚀</div>
                 <h3>Digital Storytelling</h3>
                 <p>Comprehensive script outlines, dynamic hooks, and pacing structures.</p>
             </div>
-            <div class="box-card" onclick="openTimeline('act', 'Acting & Direction')">
+            <div class="box-card" onclick="openTimeline('act', 'Acting & Direction'); playClickSound();">
                 <div class="box-icon">🎭</div>
                 <h3>Acting & Direction</h3>
                 <p>Multi-character performance orchestration and cinematic narrative timing.</p>
@@ -160,7 +183,7 @@
     </section>
 
     <section class="separate-timeline-view" id="timeline-view-section">
-        <button class="nav-btn" onclick="goBackToCategories()">← Back</button>
+        <button class="nav-btn" onclick="goBackToCategories(); playClickSound();">← Back</button>
         <h2 class="section-title" id="active-timeline-title">Workspace / <span>Timeline</span></h2>
         <div class="cinematic-grid-track" id="dynamic-active-track"></div>
     </section>
@@ -184,9 +207,32 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // Synthetic Cyber Click Sound System (Bina kisi extra file download jhanjhat ke audio generate karega)
+        let audioCtx = null;
+        function playClickSound() {
+            try {
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(150, audioCtx.currentTime + 0.08);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + 0.08);
+            } catch(e) { console.log("Audio play blocked or not supported."); }
+        }
+
         document.addEventListener("DOMContentLoaded", () => {
             prepareInteractiveStoryWords();
-            initializeCustomCursor();
         });
 
         function toggleLuxuryTheme(checkbox) {
@@ -197,30 +243,12 @@
             }
         }
 
-        function initializeCustomCursor() {
-            const cursor = document.getElementById('custom-cursor');
-            if(!cursor) return;
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-            document.body.addEventListener('mouseenter', (e) => {
-                if (e.target.matches && e.target.matches('button, .box-card, .logo, .intro-logo-box')) {
-                    cursor.classList.add('hovered');
-                }
-            }, true);
-            document.body.addEventListener('mouseleave', (e) => {
-                if (e.target.matches && e.target.matches('button, .box-card, .logo, .intro-logo-box')) {
-                    cursor.classList.remove('hovered');
-                }
-            }, true);
-        }
-
         function exitWelcomeIntro() {
+            playClickSound();
             const splash = document.getElementById('welcome-splash-overlay');
             if(splash) {
                 splash.classList.add('splash-exit-animation');
-                setTimeout(() => { splash.remove(); }, 1000);
+                setTimeout(() => { splash.remove(); }, 800);
             }
         }
 
@@ -244,7 +272,6 @@
         function goBackToCategories() { document.getElementById('timeline-view-section').classList.remove('active-frame'); document.getElementById('categories-section').classList.add('active-frame'); }
 
         function formatMediaEmbed(url) {
-            // YouTube Handler
             if(url.includes('youtube.com/watch') || url.includes('youtu.be')) {
                 let videoId = '';
                 if(url.includes('youtube.com/watch')) {
@@ -254,18 +281,15 @@
                 }
                 return `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
             }
-            // YouTube Shorts Handler
             if(url.includes('youtube.com/shorts/')) {
                 let videoId = url.split('/shorts/')[1].split('?')[0];
                 return `<iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>`;
             }
-            // Instagram Embed Handler
             if(url.includes('instagram.com/')) {
                 let cleanUrl = url.split('?')[0];
                 if(!cleanUrl.endsWith('/')) cleanUrl += '/';
                 return `<iframe src="${cleanUrl}embed" allowtransparency="true" frameborder="0" scrolling="no"></iframe>`;
             }
-            // Default Standard Video Link
             return `<video controls preload="metadata" playsinline><source src="${url}"></video>`;
         }
 
