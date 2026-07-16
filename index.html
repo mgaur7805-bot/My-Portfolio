@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MG | Portfolio</title>
+    <title>MG | Luxury Cinematic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
-    <!-- Firebase Realtime DB SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         :root {
             --bg-color: #030406;
-            --card-bg: linear-gradient(145deg, #090d14, #040609);
+            --card-bg: #070a0f; /* Pure Clean Solid Luxury Dark */
             --text-main: #ffffff;
             --text-sub: #8fa0b0;
             --text-muted: #4e5763;
@@ -23,12 +22,12 @@
             --neon-glow: rgba(0, 243, 255, 0.35);
             --header-bg: rgba(3, 4, 6, 0.85);
             --border-color: rgba(0, 243, 255, 0.08);
-            --track-bg: #060a12;
+            --track-bg: #05080d;
         }
 
         [data-theme="light"] {
             --bg-color: #f0f4f8;
-            --card-bg: linear-gradient(145deg, #ffffff, #e1e7f0);
+            --card-bg: #ffffff; /* Solid Pure White for light mode */
             --text-main: #050a12;
             --text-sub: #2c3e50;
             --text-muted: #7f8c8d;
@@ -42,8 +41,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--bg-color); color: var(--text-sub); overflow-x: hidden; width: 100%; transition: background-color 0.4s; }
         h1, h2, h3, .intro-logo-box, .logo { font-family: 'Syne', sans-serif; color: var(--text-main); }
-
-        /* Scanning lines totally removed from here to preserve video quality and colors */
 
         /* Cinematic Overlay Screen */
         #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #020305; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
@@ -91,12 +88,12 @@
         .categories-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1150px; margin: 0 auto; }
         @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; } }
         
-        /* Premium Glow Background Cards */
+        /* FIXED: Linear-Gradient completely removed for a sleek pure solid look */
         .box-card { 
             background: var(--card-bg); 
             border-radius: 24px; 
             padding: 40px 25px; 
-            border: 1px solid rgba(0, 243, 255, 0.3); 
+            border: 1px solid rgba(0, 243, 255, 0.2); 
             text-align: center; 
             cursor: pointer; 
             min-height: 280px; 
@@ -106,12 +103,12 @@
             justify-content: center; 
             transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
             position: relative;
-            box-shadow: 0 8px 32px rgba(0, 243, 255, 0.12), inset 0 0 15px rgba(0, 243, 255, 0.05);
+            box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15);
         }
         .box-card:hover { 
             border-color: var(--neon-accent); 
             transform: translateY(-8px); 
-            box-shadow: 0 20px 50px rgba(0, 243, 255, 0.3), inset 0 0 25px rgba(0, 243, 255, 0.15); 
+            box-shadow: 0 25px 60px rgba(0, 243, 255, 0.35); 
         }
         
         /* Premium Floating Icons */
@@ -130,10 +127,11 @@
         .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 25px; width: 100%; max-width: 1050px; margin: 0 auto; }
         @media(min-width: 768px) { .cinematic-grid-track { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
 
-        .video-item { background: var(--track-bg); padding: 18px; border-radius: 28px; border: 1px solid var(--border-color); transition: 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; }
-        .video-item:hover { border-color: rgba(0, 243, 255, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        /* Video Slots: Solid Backgrounds and Clear Render */
+        .video-item { background: var(--track-bg); padding: 18px; border-radius: 28px; border: 1px solid var(--border-color); transition: 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
+        .video-item:hover { border-color: rgba(0, 243, 255, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
         
-        /* Fully Revamped & Fixed Media Frame */
+        /* Revamped & Fixed Media Frame */
         .media-frame-container { position: relative; width: 100%; padding-bottom: 130%; height: 0; overflow: hidden; border-radius: 18px; background: #010203; border: 1px solid rgba(255,255,255,0.05); }
         .media-frame-container.landscape-mode { padding-bottom: 56.25% !important; }
         .media-frame-container iframe, .media-frame-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; display: block; }
@@ -158,7 +156,6 @@
 </head>
 <body>
 
-    <!-- Overlay Loading Sequence -->
     <div id="welcome-splash-overlay">
         <div class="intro-logo-box" onclick="exitWelcomeIntro()">MG</div>
         <div class="intro-welcome-text">Welcome To The Creative Realm</div>
