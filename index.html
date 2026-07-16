@@ -6,7 +6,8 @@
     <title>MG | Luxury Cinematic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Ultra Premium Fonts: Syne for structural boldness & Cabinet Grotesk vibe setup -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
     
     <!-- Firebase Realtime DB SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -14,142 +15,133 @@
 
     <style>
         :root {
-            --bg-color: #030406;
-            --card-bg: #070a0f; 
+            --bg-color: #020305;
+            --card-bg: #090d16; 
             --text-main: #ffffff;
-            --text-sub: #8fa0b0;
-            --text-muted: #4e5763;
+            --text-sub: #b2c0cc;
+            --text-muted: #525f70;
             --neon-accent: #00f3ff;
-            --neon-glow: rgba(0, 243, 255, 0.35);
-            --header-bg: rgba(3, 4, 6, 0.85);
-            --border-color: rgba(0, 243, 255, 0.08);
-            --track-bg: #05080d;
+            --neon-glow: rgba(0, 243, 255, 0.25);
+            --header-bg: rgba(2, 3, 5, 0.9);
+            --border-color: rgba(255, 255, 255, 0.05);
+            --track-bg: #05080e;
         }
 
         [data-theme="light"] {
-            --bg-color: #f0f4f8;
+            --bg-color: #f4f7fa;
             --card-bg: #ffffff; 
-            --text-main: #050a12;
-            --text-sub: #2c3e50;
-            --text-muted: #7f8c8d;
+            --text-main: #0a0f18;
+            --text-sub: #3a4d61;
+            --text-muted: #8292a6;
             --neon-accent: #0066ff;
-            --neon-glow: rgba(0, 102, 255, 0.25);
-            --header-bg: rgba(240, 244, 248, 0.9);
-            --border-color: rgba(0, 102, 255, 0.15);
-            --track-bg: #e6ebf3;
+            --neon-glow: rgba(0, 102, 255, 0.2);
+            --header-bg: rgba(244, 247, 25a, 0.95);
+            --border-color: rgba(0, 0, 0, 0.08);
+            --track-bg: #eaf0f7;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--bg-color); color: var(--text-sub); overflow-x: hidden; width: 100%; transition: background-color 0.4s; }
-        h1, h2, h3, .intro-logo-box, .logo { font-family: 'Syne', sans-serif; color: var(--text-main); }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-color); color: var(--text-sub); overflow-x: hidden; width: 100%; transition: background-color 0.4s; letter-spacing: -0.2px; }
+        h1, h2, h3, .intro-logo-box, .logo { font-family: 'Syne', sans-serif; font-weight: 800; text-transform: uppercase; }
 
-        /* FIXED: Cyber line pattern block completely deleted to ensure 100% crisp video output */
-
-        /* Cinematic Overlay Screen */
-        #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #020305; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        .splash-exit-animation { animation: curtainUpExit 0.7s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
+        /* Splash Screen Luxury Transition */
+        #welcome-splash-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #010204; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        .splash-exit-animation { animation: curtainUpExit 0.8s cubic-bezier(0.85, 0, 0.15, 1) forwards; }
         
-        .intro-logo-box { font-size: 85px; font-weight: 900; background: linear-gradient(45deg, #fff, var(--neon-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: 5px; filter: drop-shadow(0 0 25px var(--neon-glow)); cursor: pointer; animation: logoBreathing 2.5s ease-in-out infinite alternate; }
-        .intro-welcome-text { margin-top: 20px; font-size: 11px; font-weight: 600; letter-spacing: 4px; color: #fff; text-transform: uppercase; text-align: center; opacity: 0.8; }
-        .click-instruction { margin-top: 25px; font-size: 9px; font-weight: 600; letter-spacing: 3px; color: var(--neon-accent); text-transform: uppercase; animation: flashEffect 1.5s infinite; }
+        .intro-logo-box { font-size: 100px; font-weight: 900; background: linear-gradient(135deg, #ffffff 40%, var(--neon-accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px; filter: drop-shadow(0 0 30px var(--neon-glow)); cursor: pointer; animation: logoBreathing 2s ease-in-out infinite alternate; }
+        .intro-welcome-text { margin-top: 25px; font-size: 10px; font-weight: 700; letter-spacing: 5px; color: #fff; text-transform: uppercase; text-align: center; opacity: 0.7; }
+        .click-instruction { margin-top: 30px; font-size: 9px; font-weight: 700; letter-spacing: 3px; color: var(--neon-accent); text-transform: uppercase; animation: flashEffect 1.5s infinite; }
 
-        header { background: var(--header-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 28px; font-weight: 900; color: var(--neon-accent); letter-spacing: 1px; cursor: pointer; text-shadow: 0 0 12px var(--neon-glow); }
+        header { background: var(--header-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); padding: 22px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .logo { font-size: 32px; font-weight: 900; letter-spacing: -1px; background: linear-gradient(90deg, #fff 50%, var(--neon-accent) 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; cursor: pointer; }
         
-        .theme-switch { display: inline-block; height: 24px; position: relative; width: 46px; }
+        .theme-switch { display: inline-block; height: 26px; position: relative; width: 48px; }
         .theme-switch input { display:none; }
-        .slider { background-color: #0d121c; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; border: 1px solid var(--border-color); }
-        .slider:before { background-color: var(--neon-accent); bottom: 3px; content: ""; height: 16px; left: 4px; position: absolute; transition: .4s; width: 16px; border-radius: 50%; }
+        .slider { background-color: rgba(255,255,255,0.05); bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; border: 1px solid var(--border-color); }
+        .slider:before { background-color: var(--neon-accent); bottom: 4px; content: ""; height: 16px; left: 5px; position: absolute; transition: .4s; width: 16px; border-radius: 50%; }
         input:checked + .slider { background-color: #fff; }
         input:checked + .slider:before { transform: translateX(22px); background-color: #0066ff; }
 
-        .hero { padding: 80px 20px 60px 20px; text-align: center; position: relative; }
-        .hero h1 { font-size: 38px; margin-bottom: 20px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; }
-        @media(min-width: 768px) { .hero h1 { font-size: 80px; } }
-        .hero h1 span { background: linear-gradient(90deg, var(--neon-accent), #0066ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 30px rgba(0, 243, 255, 0.2); }
-
-        .story-container { max-width: 850px; margin: 0 auto 35px auto; padding: 10px; line-height: 1.7; font-size: 15px; color: var(--text-sub); text-align: center; }
-        @media(min-width: 768px) { .story-container { font-size: 20px; line-height: 1.9; } }
-        .motion-word { display: inline-block; transition: 0.25s; }
-        .motion-word:hover { color: var(--neon-accent); text-shadow: 0 0 10px var(--neon-accent); transform: scale(1.15) translateY(-2px); }
+        .hero { padding: 120px 24px 80px 24px; text-align: center; position: relative; max-width: 1200px; margin: 0 auto; }
         
-        .highlight-punch { color: var(--text-main); font-weight: 600; border-bottom: none !important; }
+        /* FIXED: Double Color Premium Heading for Hero Front Face */
+        .hero h1 { font-size: 45px; margin-bottom: 28px; font-weight: 800; letter-spacing: -2px; line-height: 1.05; color: #ffffff; }
+        @media(min-width: 768px) { .hero h1 { font-size: 95px; } }
+        .hero h1 span { background: linear-gradient(90deg, #ffffff 45%, var(--neon-accent) 55%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 40px rgba(0, 243, 255, 0.15)); }
 
-        .explore-trigger-btn { background: transparent; color: var(--neon-accent); border: 2px solid var(--neon-accent); padding: 15px 35px; font-size: 13px; font-weight: 700; letter-spacing: 2px; border-radius: 50px; cursor: pointer; margin: 10px auto; display: block; transition: 0.4s cubic-bezier(0.2, 1, 0.2, 1); outline: none; box-shadow: 0 0 15px rgba(0, 243, 255, 0.1); }
-        .explore-trigger-btn:hover { background: var(--neon-accent); color: #030406; box-shadow: 0 0 35px var(--neon-glow); transform: translateY(-3px); }
-
-        .work-categories-section, .separate-timeline-view { padding: 40px 15px; display: none; opacity: 0; transform: translateY(30px); }
-        .active-frame { display: block; animation: activeIntroFrame 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .story-container { max-width: 900px; margin: 0 auto 45px auto; padding: 10px; line-height: 1.8; font-size: 16px; color: var(--text-sub); text-align: center; font-weight: 400; }
+        @media(min-width: 768px) { .story-container { font-size: 21px; line-height: 1.9; } }
+        .motion-word { display: inline-block; transition: 0.3s cubic-bezier(0.2, 1, 0.2, 1); }
+        .motion-word:hover { color: var(--neon-accent); transform: scale(1.1) translateY(-3px); }
         
-        .section-title { font-size: 28px; margin-bottom: 35px; text-align: center; font-weight: 800; letter-spacing: -0.5px; }
-        @media(min-width: 768px) { .section-title { font-size: 40px; } }
-        .section-title span { color: var(--neon-accent); text-shadow: 0 0 15px var(--neon-glow); }
+        .highlight-punch { color: var(--text-main); font-weight: 700; }
 
-        .nav-btn { background: rgba(255, 255, 255, 0.02); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 22px; font-size: 12px; font-weight: 600; border-radius: 30px; cursor: pointer; margin-bottom: 30px; transition: 0.3s; }
-        .nav-btn:hover { background: rgba(0, 243, 255, 0.1); border-color: var(--neon-accent); }
+        .explore-trigger-btn { background: #ffffff; color: #020305; border: none; padding: 18px 45px; font-size: 12px; font-weight: 700; letter-spacing: 3px; border-radius: 50px; cursor: pointer; margin: 20px auto; display: block; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); outline: none; box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1); }
+        .explore-trigger-btn:hover { background: var(--neon-accent); color: #020305; box-shadow: 0 15px 40px var(--neon-glow); transform: translateY(-4px); }
+
+        .work-categories-section, .separate-timeline-view { padding: 60px 24px; display: none; opacity: 0; transform: translateY(40px); }
+        .active-frame { display: block; animation: activeIntroFrame 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         
-        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1150px; margin: 0 auto; }
-        @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; } }
+        /* FIXED: Section Double Color Titles */
+        .section-title { font-size: 32px; margin-bottom: 45px; text-align: center; font-weight: 800; letter-spacing: -1.5px; color: #ffffff; }
+        @media(min-width: 768px) { .section-title { font-size: 46px; } }
+        .section-title span { background: linear-gradient(90deg, #ffffff 30%, var(--neon-accent) 70%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .nav-btn { background: rgba(255, 255, 255, 0.03); color: var(--text-main); border: 1px solid var(--border-color); padding: 12px 26px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; border-radius: 30px; cursor: pointer; margin-bottom: 40px; transition: 0.3s; text-transform: uppercase; }
+        .nav-btn:hover { background: #ffffff; color: #020305; }
+        
+        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 1200px; margin: 0 auto; }
+        @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 35px; } }
         
         .box-card { 
             background: var(--card-bg); 
-            border-radius: 24px; 
-            padding: 40px 25px; 
-            border: 1px solid rgba(0, 243, 255, 0.2); 
+            border-radius: 28px; 
+            padding: 50px 30px; 
+            border: 1px solid var(--border-color); 
             text-align: center; 
             cursor: pointer; 
-            min-height: 280px; 
+            min-height: 320px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
             position: relative;
-            box-shadow: 0 10px 40px rgba(0, 243, 255, 0.15);
         }
         .box-card:hover { 
-            border-color: var(--neon-accent); 
-            transform: translateY(-8px); 
-            box-shadow: 0 25px 60px rgba(0, 243, 255, 0.35); 
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px); 
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6); 
         }
         
-        .box-icon { font-size: 46px; margin-bottom: 20px; display: inline-block; position: relative; transform-style: preserve-3d; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
+        .box-icon { font-size: 48px; margin-bottom: 24px; display: inline-block; transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .box-card:hover .box-icon { transform: scale(1.25) rotate(-5deg); }
         
-        .categories-grid .box-card:nth-child(1) .box-icon { animation: premiumFloatOne 4s ease-in-out infinite alternate; }
-        .categories-grid .box-card:nth-child(2) .box-icon { animation: premiumFloatTwo 4.5s ease-in-out infinite alternate; }
-        .categories-grid .box-card:nth-child(3) .box-icon { animation: premiumFloatThree 4.2s ease-in-out infinite alternate; }
-        
-        .box-card:hover .box-icon { animation-play-state: paused; transform: scale(1.3) rotateY(180deg) translateZ(20px); filter: drop-shadow(0 0 15px var(--neon-accent)); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-        
-        .box-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px; }
-        .box-card p { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; }
+        .box-card h3 { font-size: 24px; margin-bottom: 14px; color: var(--text-main); letter-spacing: -0.5px; }
+        .box-card p { font-size: 14px; color: var(--text-sub); line-height: 1.65; font-family: 'Plus Jakarta Sans', sans-serif; text-transform: none; }
 
-        .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 25px; width: 100%; max-width: 1050px; margin: 0 auto; }
-        @media(min-width: 768px) { .cinematic-grid-track { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
+        .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 30px; width: 100%; max-width: 1100px; margin: 0 auto; }
+        @media(min-width: 768px) { .cinematic-grid-track { grid-template-columns: repeat(2, 1fr); gap: 40px; } }
 
-        .video-item { background: var(--track-bg); padding: 18px; border-radius: 28px; border: 1px solid var(--border-color); transition: 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 30px rgba(0,0,0,0.3); }
-        .video-item:hover { border-color: rgba(0, 243, 255, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        .video-item { background: var(--track-bg); padding: 22px; border-radius: 32px; border: 1px solid var(--border-color); transition: 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; }
+        .video-item:hover { border-color: rgba(255, 255, 255, 0.15); }
         
-        .media-frame-container { position: relative; width: 100%; padding-bottom: 130%; height: 0; overflow: hidden; border-radius: 18px; background: #010203; border: 1px solid rgba(255,255,255,0.05); }
+        .media-frame-container { position: relative; width: 100%; padding-bottom: 130%; height: 0; overflow: hidden; border-radius: 20px; background: #000000; }
         .media-frame-container.landscape-mode { padding-bottom: 56.25% !important; }
         .media-frame-container iframe, .media-frame-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; display: block; }
 
-        .retention-dashboard { width: 100%; background: #05080e; border-radius: 14px; padding: 14px; margin-top: 14px; border: 1px solid rgba(0, 243, 255, 0.08); }
-        .retention-title { font-size: 10px; color: var(--neon-accent); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
-        .retention-graph-svg { width: 100%; height: 40px; }
-        .retention-path { stroke: var(--neon-accent); stroke-width: 2.5; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; animation: traceGraphMetrics 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
+        .retention-dashboard { width: 100%; background: rgba(0,0,0,0.3); border-radius: 16px; padding: 16px; margin-top: 18px; border: 1px solid var(--border-color); }
+        .retention-title { font-size: 11px; color: var(--neon-accent); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 8px; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .retention-graph-svg { width: 100%; height: 42px; }
+        .retention-path { stroke: var(--neon-accent); stroke-width: 3; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; animation: traceGraphMetrics 2.5s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
-        @keyframes logoBreathing { 0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.3)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(0, 243, 255, 0.7)); } }
-        @keyframes flashEffect { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        @keyframes logoBreathing { 0% { transform: scale(1); } 100% { transform: scale(1.03); } }
+        @keyframes flashEffect { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
         @keyframes curtainUpExit { to { transform: translateY(-100%); opacity: 0; } }
         @keyframes activeIntroFrame { to { opacity: 1; transform: translateY(0); } }
         @keyframes traceGraphMetrics { to { stroke-dashoffset: 0; } }
 
-        @keyframes premiumFloatOne { 0% { transform: translateY(0px) rotateX(0deg); } 100% { transform: translateY(-12px) rotateX(10deg) rotateY(5deg); } }
-        @keyframes premiumFloatTwo { 0% { transform: translateY(-8px) rotateY(-5deg); } 100% { transform: translateY(6px) rotateY(10deg) rotateX(-5deg); } }
-        @keyframes premiumFloatThree { 0% { transform: translateY(4px) rotateZ(-2deg); } 100% { transform: translateY(-10px) rotateZ(4deg) rotateX(8deg); } }
-
-        footer { text-align: center; padding: 40px 20px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-color); margin-top: 80px; letter-spacing: 0.5px; }
+        footer { text-align: center; padding: 60px 24px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-color); margin-top: 100px; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -157,8 +149,8 @@
     <!-- Overlay Loading Sequence -->
     <div id="welcome-splash-overlay">
         <div class="intro-logo-box" onclick="exitWelcomeIntro()">MG</div>
-        <div class="intro-welcome-text">Welcome To The Creative Realm</div>
-        <div class="click-instruction">Click MG Logo to Enter</div>
+        <div class="intro-welcome-text">Premium Production Space</div>
+        <div class="click-instruction">Tap MG To Initialize</div>
     </div>
 
     <header>
@@ -170,28 +162,29 @@
     </header>
 
     <section class="hero" id="home-section">
+        <!-- FIXED: Double color typography setup on main layout -->
         <h1>Hi, I am <span>Mohit Gaur</span></h1>
         <div class="story-container" id="interactive-story-box">
             Ek Editor Ki Life Ek Blank Timeline Se Shuru Hoti Hai. Shuruat Ka Bura Time, Woh Systems Ka Lag Hona, Client Ke Endless Revisions Aur Sleepless Nights Ka Struggle... Har Ek Cut Mein Ek Sapna Chhupa Hota Hai. Par Sach Batayein? Usi Halke Andhere Aur Complex Timelines Se Guzar Kar Hi Real High-Retention Storytelling Seekhi Jati Hai. Aaj Mushkilon Ko Piche Chhod Kar, Raw Footage Ko Cinematic Masterpiece Mein Badalna Hi Hamari Pehchan Ban Chuki Hai. If You Can Imagine It, We Can Execute It With Precision. Mehnat Se Lekar Perfection Tak Ka Yeh Safar Hi Asli Growth Hai!
         </div>
-        <button class="explore-trigger-btn" onclick="revealCategories(); triggerCinematicSound();">EXPLORE MY WORK</button>
+        <button class="explore-trigger-btn" onclick="revealCategories(); triggerCinematicSound();">EXPLORE MASTERPIECES</button>
     </section>
 
     <section class="work-categories-section" id="categories-section">
-        <button class="nav-btn" onclick="goBackToHome(); triggerCinematicSound();">← Back To Matrix</button>
+        <button class="nav-btn" onclick="goBackToHome(); triggerCinematicSound();">← Return Home</button>
         <h2 class="section-title">Select <span>Expertise Track</span></h2>
         <div class="categories-grid">
-            <div class="box-card" onclick="openTimeline('edit', 'Video Editing'); triggerCinematicSound();">
+            <div class="box-card" onclick="openTimeline('edit', 'Video <span>Editing</span>'); triggerCinematicSound();">
                 <div class="box-icon">🎬</div>
                 <h3>Video Editing</h3>
                 <p>High frame-rate cutting, professional speed ramping, and high-end sound design.</p>
             </div>
-            <div class="box-card" onclick="openTimeline('story', 'Digital Storytelling'); triggerCinematicSound();">
+            <div class="box-card" onclick="openTimeline('story', 'Digital <span>Storytelling</span>'); triggerCinematicSound();">
                 <div class="box-icon">🚀</div>
                 <h3>Digital Storytelling</h3>
                 <p>Comprehensive script outlines, dynamic hooks, and pacing structures.</p>
             </div>
-            <div class="box-card" onclick="openTimeline('act', 'Acting & Direction'); triggerCinematicSound();">
+            <div class="box-card" onclick="openTimeline('act', 'Acting & <span>Direction</span>'); triggerCinematicSound();">
                 <div class="box-icon">🎭</div>
                 <h3>Acting & Direction</h3>
                 <p>Multi-character performance orchestration and cinematic narrative timing.</p>
@@ -233,17 +226,17 @@
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
                 
-                osc.type = 'triangle'; 
-                osc.frequency.setValueAtTime(650, audioCtx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.12);
+                osc.type = 'sine'; 
+                osc.frequency.setValueAtTime(500, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(60, audioCtx.currentTime + 0.15);
                 
-                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
                 
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
-                osc.stop(audioCtx.currentTime + 0.12);
+                osc.stop(audioCtx.currentTime + 0.15);
             } catch(e) { console.log("Audio contextual block overridden."); }
         }
 
@@ -262,7 +255,7 @@
             const splash = document.getElementById('welcome-splash-overlay');
             if(splash) {
                 splash.classList.add('splash-exit-animation');
-                setTimeout(() => { splash.remove(); }, 700);
+                setTimeout(() => { splash.remove(); }, 800);
             }
         }
 
@@ -329,7 +322,7 @@
         function openTimeline(prefix, titleText) {
             document.getElementById('categories-section').classList.remove('active-frame');
             document.getElementById('timeline-view-section').classList.add('active-frame');
-            document.getElementById('active-timeline-title').innerHTML = `Active Workspace: <span>${titleText}</span>`;
+            document.getElementById('active-timeline-title').innerHTML = `Active Workspace: ${titleText}`;
             
             const workspace = document.getElementById('dynamic-active-track');
             workspace.innerHTML = `<div style="text-align:center;color:#fff;padding:40px;width:100%;">Syncing Cinematic Viewport...</div>`;
@@ -351,7 +344,7 @@
                                     <div class="media-frame-container ${mediaConfig.type}">
                                         ${mediaConfig.html}
                                     </div>
-                                    <p style="color:var(--text-main); font-weight:600; font-size:15px; margin-top:14px; letter-spacing:-0.3px;">${track.name}</p>
+                                    <p style="color:var(--text-main); font-weight:700; font-size:16px; margin-top:16px; letter-spacing:-0.3px;">${track.name}</p>
                                     <div class="retention-dashboard">
                                         <div class="retention-title">📊 Analytics Feed Engaged</div>
                                         <svg class="retention-graph-svg" viewBox="0 0 300 50">
