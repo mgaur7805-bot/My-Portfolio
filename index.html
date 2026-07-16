@@ -24,7 +24,6 @@
             --header-bg: rgba(3, 4, 6, 0.85);
             --border-color: rgba(0, 243, 255, 0.08);
             --track-bg: #060a12;
-            --glitch-color: #ff0055;
         }
 
         [data-theme="light"] {
@@ -58,7 +57,6 @@
         header { background: var(--header-bg); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); padding: 18px 6%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
         .logo { font-size: 28px; font-weight: 900; color: var(--neon-accent); letter-spacing: 1px; cursor: pointer; text-shadow: 0 0 12px var(--neon-glow); }
         
-        /* Theme Switcher Toggle styling */
         .theme-switch { display: inline-block; height: 24px; position: relative; width: 46px; }
         .theme-switch input { display:none; }
         .slider { background-color: #0d121c; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0; transition: .4s; border-radius: 34px; border: 1px solid var(--border-color); }
@@ -75,7 +73,9 @@
         @media(min-width: 768px) { .story-container { font-size: 20px; line-height: 1.9; } }
         .motion-word { display: inline-block; transition: 0.25s; }
         .motion-word:hover { color: var(--neon-accent); text-shadow: 0 0 10px var(--neon-accent); transform: scale(1.15) translateY(-2px); }
-        .highlight-punch { color: var(--text-main); font-weight: 600; border-bottom: 1px dashed var(--neon-accent); }
+        
+        /* Removed dashed underline from punch text */
+        .highlight-punch { color: var(--text-main); font-weight: 600; border-bottom: none !important; }
 
         .explore-trigger-btn { background: transparent; color: var(--neon-accent); border: 2px solid var(--neon-accent); padding: 15px 35px; font-size: 13px; font-weight: 700; letter-spacing: 2px; border-radius: 50px; cursor: pointer; margin: 10px auto; display: block; transition: 0.4s cubic-bezier(0.2, 1, 0.2, 1); outline: none; box-shadow: 0 0 15px rgba(0, 243, 255, 0.1); }
         .explore-trigger-btn:hover { background: var(--neon-accent); color: #030406; box-shadow: 0 0 35px var(--neon-glow); transform: translateY(-3px); }
@@ -90,12 +90,31 @@
         .nav-btn { background: rgba(255, 255, 255, 0.02); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 22px; font-size: 12px; font-weight: 600; border-radius: 30px; cursor: pointer; margin-bottom: 30px; transition: 0.3s; }
         .nav-btn:hover { background: rgba(0, 243, 255, 0.1); border-color: var(--neon-accent); }
         
-        /* RESPONSIVE EXPERTISE CARDS & CINEMATIC 3D ICON MOTION */
         .categories-grid { display: grid; grid-template-columns: 1fr; gap: 24px; max-width: 1150px; margin: 0 auto; }
         @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 25px; } }
         
-        .box-card { background: var(--card-bg); border-radius: 24px; padding: 40px 25px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; min-height: 280px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); position: relative; }
-        .box-card:hover { border-color: var(--neon-accent); transform: translateY(-8px); box-shadow: 0 20px 45px rgba(0, 243, 255, 0.15); }
+        /* UPGRADED: Heavy Permanent Glowing Background for 3 Main Categories */
+        .box-card { 
+            background: var(--card-bg); 
+            border-radius: 24px; 
+            padding: 40px 25px; 
+            border: 1px solid rgba(0, 243, 255, 0.3); 
+            text-align: center; 
+            cursor: pointer; 
+            min-height: 280px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 243, 255, 0.12), inset 0 0 15px rgba(0, 243, 255, 0.05);
+        }
+        .box-card:hover { 
+            border-color: var(--neon-accent); 
+            transform: translateY(-8px); 
+            box-shadow: 0 20px 50px rgba(0, 243, 255, 0.3), inset 0 0 25px rgba(0, 243, 255, 0.15); 
+        }
         
         /* Premium Floating & Rotation Systems for Icons */
         .box-icon { font-size: 46px; margin-bottom: 20px; display: inline-block; position: relative; transform-style: preserve-3d; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
@@ -104,7 +123,6 @@
         .categories-grid .box-card:nth-child(2) .box-icon { animation: premiumFloatTwo 4.5s ease-in-out infinite alternate; }
         .categories-grid .box-card:nth-child(3) .box-icon { animation: premiumFloatThree 4.2s ease-in-out infinite alternate; }
         
-        /* Advanced 3D Interactive Burst on Hover */
         .box-card:hover .box-icon { animation-play-state: paused; transform: scale(1.3) rotateY(180deg) translateZ(20px); filter: drop-shadow(0 0 15px var(--neon-accent)); transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
         
         .box-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px; }
@@ -117,27 +135,22 @@
         .video-item { background: var(--track-bg); padding: 18px; border-radius: 28px; border: 1px solid var(--border-color); transition: 0.3s ease; display: flex; flex-direction: column; justify-content: space-between; }
         .video-item:hover { border-color: rgba(0, 243, 255, 0.3); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         
-        /* 9:16 Responsive Video Wrapper For Instagram Reels & YouTube Shorts Inside Platform */
-        .media-frame-container { position: relative; width: 100%; padding-bottom: 120%; height: 0; overflow: hidden; border-radius: 18px; background: #010203; border: 1px solid rgba(255,255,255,0.03); }
-        
-        /* Auto Adjust For Standard 16:9 Landscape Videos */
+        /* Fully Revamped & Fixed Media Frame for Instagram/YouTube Embedded Windows */
+        .media-frame-container { position: relative; width: 100%; padding-bottom: 130%; height: 0; overflow: hidden; border-radius: 18px; background: #010203; border: 1px solid rgba(255,255,255,0.05); }
         .media-frame-container.landscape-mode { padding-bottom: 56.25% !important; }
-        
-        .media-frame-container iframe, .media-frame-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+        .media-frame-container iframe, .media-frame-container video { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; display: block; }
 
         .retention-dashboard { width: 100%; background: #05080e; border-radius: 14px; padding: 14px; margin-top: 14px; border: 1px solid rgba(0, 243, 255, 0.08); }
         .retention-title { font-size: 10px; color: var(--neon-accent); text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700; margin-bottom: 6px; }
         .retention-graph-svg { width: 100%; height: 40px; }
         .retention-path { stroke: var(--neon-accent); stroke-width: 2.5; fill: none; stroke-dasharray: 400; stroke-dashoffset: 400; animation: traceGraphMetrics 2.2s cubic-bezier(0.4, 0, 0.2, 1) forwards; }
 
-        /* Animation System Core Definitions */
         @keyframes logoBreathing { 0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.3)); } 100% { transform: scale(1.05); filter: drop-shadow(0 0 30px rgba(0, 243, 255, 0.7)); } }
         @keyframes flashEffect { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
         @keyframes curtainUpExit { to { transform: translateY(-100%); opacity: 0; } }
         @keyframes activeIntroFrame { to { opacity: 1; transform: translateY(0); } }
         @keyframes traceGraphMetrics { to { stroke-dashoffset: 0; } }
 
-        /* 3D Dynamic Structural Floating Speeds */
         @keyframes premiumFloatOne { 0% { transform: translateY(0px) rotateX(0deg); } 100% { transform: translateY(-12px) rotateX(10deg) rotateY(5deg); } }
         @keyframes premiumFloatTwo { 0% { transform: translateY(-8px) rotateY(-5deg); } 100% { transform: translateY(6px) rotateY(10deg) rotateX(-5deg); } }
         @keyframes premiumFloatThree { 0% { transform: translateY(4px) rotateZ(-2deg); } 100% { transform: translateY(-10px) rotateZ(4deg) rotateX(8deg); } }
@@ -217,7 +230,6 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
-        // Upgraded Cinematic Mech Sound Engine 
         let audioCtx = null;
         function triggerCinematicSound() {
             try {
@@ -279,40 +291,36 @@
         function goBackToHome() { document.getElementById('categories-section').classList.remove('active-frame'); document.getElementById('home-section').style.display = 'block'; }
         function goBackToCategories() { document.getElementById('timeline-view-section').classList.remove('active-frame'); document.getElementById('categories-section').classList.add('active-frame'); }
 
-        // EXTREMELY POWERFUL MEDIA CORES EXTRACTOR (Bypass Instagram External App Popups)
+        // FIX LOGIC: Native Standard Iframe Render Mechanism to load directly inside your Portfolio
         function generateAdvancedCinematicEmbed(url) {
-            let layoutType = 'reel-mode'; // Default vertical profile layout
             let embedCode = '';
-
-            // Clean standard query attributes
             let sanitizedUrl = url.split('?')[0].trim();
             if(sanitizedUrl.endsWith('/')) { sanitizedUrl = sanitizedUrl.slice(0, -1); }
 
-            // 1. INSTAGRAM EXTRACTION LOGIC (Strictly prevents external redirects)
+            // 1. INSTAGRAM FIXED SYSTEM (Uses the Standard Embed Core Endpoint)
             if(sanitizedUrl.includes('instagram.com')) {
                 let parts = sanitizedUrl.split('/');
                 let shortcode = '';
+                let idx = parts.findIndex(p => p === 'reel' || p === 'p' || p === 'tv');
                 
-                // Fetch ID pattern from reels, tv or posts
-                let idx = parts.findIndex(p => p === 'reel' || p === 'p' || p === 'tv' || p === 'shir');
                 if(idx !== -1 && parts[idx+1]) {
                     shortcode = parts[idx+1];
                 } else {
                     shortcode = parts[parts.length - 1];
                 }
                 
-                embedCode = `<iframe src="https://www.instagram.com/p/${shortcode}/embed/captioned=false" allowtransparency="true" allowfullscreen="true" frameborder="0" scrolling="no" style="width:100%; height:100%; border-radius:18px;"></iframe>`;
+                embedCode = `<iframe src="https://www.instagram.com/p/${shortcode}/embed/" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true" style="width:100%; height:100%;"></iframe>`;
                 return { html: embedCode, type: 'reel-mode' };
             }
 
-            // 2. YOUTUBE SHORTS EXTRACTION LOGIC
+            // 2. YOUTUBE SHORTS EXTRACTION
             if(sanitizedUrl.includes('youtube.com/shorts/')) {
                 let videoId = sanitizedUrl.split('/shorts/')[1];
                 embedCode = `<iframe src="https://www.youtube.com/embed/${videoId}?autoplay=0&rel=0&modestbranding=1" allowfullscreen></iframe>`;
                 return { html: embedCode, type: 'reel-mode' };
             }
 
-            // 3. YOUTUBE STANDARD LANDSCAPE VIDEOS LOGIC
+            // 3. YOUTUBE STANDARD LANDSCAPE VIDEOS
             if(sanitizedUrl.includes('youtube.com/watch') || sanitizedUrl.includes('youtu.be')) {
                 let videoId = '';
                 if(sanitizedUrl.includes('youtube.com/watch')) {
@@ -324,7 +332,7 @@
                 return { html: embedCode, type: 'landscape-mode' };
             }
 
-            // 4. DIRECT VIDEO COMPILATION FILE TARGETS
+            // 4. DIRECT COMPILATION FILE TARGETS
             embedCode = `<video controls preload="metadata" playsinline style="width:100%; height:100%; object-fit:cover;"><source src="${url}"></video>`;
             return { html: embedCode, type: 'reel-mode' };
         }
