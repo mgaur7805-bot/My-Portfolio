@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     
+    <!-- Firebase Realtime DB SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
@@ -35,7 +36,7 @@
             --neon-glow: rgba(0, 114, 255, 0.3);
             --header-bg: rgba(244, 246, 249, 0.8);
             --border-color: rgba(0, 114, 255, 0.1);
-            --track-bg: #earedf3;
+            --track-bg: #eaedf3;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -58,7 +59,7 @@
         .click-instruction { margin-top: 20px; font-size: 10px; font-weight: 600; letter-spacing: 2px; color: #45f3ff; text-transform: uppercase; animation: textBlink 1.5s ease-in-out infinite; }
 
         header { background: var(--header-bg); backdrop-filter: blur(20px); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 26px; font-weight: 800; color: var(--neon-accent); letter-spacing: 1px; cursor: pointer; text-shadow: 0 0 10px var(--neon-glow); animation: logoPulse 2s ease-in-out infinite alternate; }
+        .logo { font-size: 26px; font-weight: 800; color: var(--neon-accent); letter-spacing: 1px; cursor: pointer; text-shadow: 0 0 10px var(--neon-glow); }
         
         .theme-switch { display: inline-block; height: 24px; position: relative; width: 46px; }
         .theme-switch input { display:none; }
@@ -90,25 +91,20 @@
         .nav-btn { background: rgba(255, 255, 255, 0.03); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 20px; font-size: 13px; border-radius: 30px; cursor: pointer; margin-bottom: 25px; transition: 0.3s; }
         .nav-btn:hover { background: rgba(255,255,255,0.1); }
         
-        /* RESPONSIVE EXPERTISE CARDS WITH ICON ANIMATIONS */
+        /* RESPONSIVE EXPERTISE CARDS WITH FLOATING MOTION */
         .categories-grid { display: grid; grid-template-columns: 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 0 10px; }
         @media (min-width: 768px) { .categories-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; } }
         
-        .box-card { background: var(--card-bg); border-radius: 24px; padding: 30px 20px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s, box-shadow 0.4s; position: relative; overflow: hidden; }
-        .box-card:hover { border-color: var(--neon-accent); transform: translateY(-5px); box-shadow: 0 15px 30px var(--neon-glow); }
+        .box-card { background: var(--card-bg); border-radius: 24px; padding: 30px 20px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; min-height: 260px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s, box-shadow 0.4s; }
         
-        /* DYNAMIC ICON MOTION AND CONTINUOUS FLOAT */
-        .box-icon { font-size: 42px; margin-bottom: 18px; display: inline-block; transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55), filter 0.3s; }
+        /* Continuous Smooth Motion for Cards */
+        .categories-grid .box-card:nth-child(1) { animation: floatMotionOne 5s ease-in-out infinite alternate; }
+        .categories-grid .box-card:nth-child(2) { animation: floatMotionTwo 6s ease-in-out infinite alternate; }
+        .categories-grid .box-card:nth-child(3) { animation: floatMotionThree 5.5s ease-in-out infinite alternate; }
         
-        /* Continuous Independent Float Motion for Icons */
-        .categories-grid .box-card:nth-child(1) .box-icon { animation: iconFloatOne 3.5s ease-in-out infinite alternate; }
-        .categories-grid .box-card:nth-child(2) .box-icon { animation: iconFloatTwo 4s ease-in-out infinite alternate; }
-        .categories-grid .box-card:nth-child(3) .box-icon { animation: iconFloatThree 3.8s ease-in-out infinite alternate; }
-        
-        /* Sudden Interactive Reaction inside Cards Hover */
-        .box-card:hover .box-icon { transform: scale(1.25) rotate(8deg); filter: drop-shadow(0 0 10px var(--neon-accent)); }
-        
-        .box-card h3 { font-size: 20px; margin-bottom: 10px; color: var(--text-main); }
+        .box-card:hover { border-color: var(--neon-accent); transform: translateY(-8px) scale(1.03) !important; box-shadow: 0 20px 40px var(--neon-glow); z-index: 2; }
+        .box-icon { font-size: 36px; margin-bottom: 15px; }
+        .box-card h3 { font-size: 20px; margin-bottom: 10px; }
         .box-card p { font-size: 13px; color: var(--text-sub); line-height: 1.5; }
 
         .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 20px; width: 100%; max-width: 1100px; margin: 0 auto; }
@@ -124,18 +120,18 @@
         .retention-graph-svg { width: 100%; height: 35px; }
         .retention-path { stroke: var(--neon-accent); stroke-width: 2; fill: none; stroke-dasharray: 300; stroke-dashoffset: 300; animation: drawGraph 2s forwards; }
 
-        /* Motion System Keyframes */
-        @keyframes logoPulse { 0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(69, 243, 255, 0.3)); } 100% { transform: scale(1.04); filter: drop-shadow(0 0 15px rgba(69, 243, 255, 0.6)); } }
+        /* Keyframes for Smooth Motion Styles */
+        @keyframes logoPulse { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
         @keyframes logoGlowShift { 0% { filter: drop-shadow(0 0 15px rgba(69, 243, 255, 0.5)); } 100% { filter: drop-shadow(0 0 30px rgba(0, 114, 255, 0.8)); } }
         @keyframes textBlink { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
         @keyframes curtainUpExit { to { transform: translateY(-100%); opacity: 0; } }
         @keyframes cinematicFadeIn { to { opacity: 1; transform: translateY(0); } }
         @keyframes drawGraph { to { stroke-dashoffset: 0; } }
 
-        /* Icon Floating Motion Specs */
-        @keyframes iconFloatOne { 0% { transform: translateY(0px) rotate(0deg); } 100% { transform: translateY(-8px) rotate(-3deg); } }
-        @keyframes iconFloatTwo { 0% { transform: translateY(-5px) rotate(2deg); } 100% { transform: translateY(4px) rotate(-2deg); } }
-        @keyframes iconFloatThree { 0% { transform: translateY(3px) rotate(-1deg); } 100% { transform: translateY(-6px) rotate(4deg); } }
+        /* Floating Motion Frames for Track Cards */
+        @keyframes floatMotionOne { 0% { transform: translateY(0px); } 100% { transform: translateY(-6px); } }
+        @keyframes floatMotionTwo { 0% { transform: translateY(-4px); } 100% { transform: translateY(3px); } }
+        @keyframes floatMotionThree { 0% { transform: translateY(2px); } 100% { transform: translateY(-5px); } }
 
         footer { text-align: center; padding: 30px 20px; color: var(--text-muted); font-size: 13px; border-top: 1px solid var(--border-color); margin-top: 60px; }
     </style>
@@ -211,6 +207,7 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // Synthetic Cyber Click Sound System (Bina kisi extra file download jhanjhat ke audio generate karega)
         let audioCtx = null;
         function playClickSound() {
             try {
@@ -231,7 +228,7 @@
                 gain.connect(audioCtx.destination);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.08);
-            } catch(e) { console.log("Audio play blocked."); }
+            } catch(e) { console.log("Audio play blocked or not supported."); }
         }
 
         document.addEventListener("DOMContentLoaded", () => {
