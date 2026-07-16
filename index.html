@@ -6,16 +6,12 @@
     <title>MG | Luxury Cinematic Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- Ultra Sharp Tech & Editorial Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- Firebase Realtime DB SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         :root {
-            /* Premiere Pro Dark Slate + Production Suite Accents */
             --bg-color: #0b0c10;
             --panel-bg: #14171e;
             --text-main: #ffffff;
@@ -26,6 +22,7 @@
             --davinci-gold: #ffaa00;
             --border-color: rgba(144, 85, 255, 0.15);
             --track-bg: #0f1115;
+            --glow-color: rgba(144, 85, 255, 0.4);
         }
 
         [data-theme="light"] {
@@ -39,6 +36,7 @@
             --davinci-gold: #d97706;
             --border-color: rgba(0,0,0,0.08);
             --track-bg: #e2e8f0;
+            --glow-color: rgba(99, 102, 241, 0.2);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Space Grotesk', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -64,22 +62,21 @@
         input:checked + .slider { background-color: #fff; }
         input:checked + .slider:before { transform: translateX(22px); background-color: #0066ff; }
 
-        /* Production Monitor Interface Look */
         .hero { padding: 90px 20px 60px 20px; text-align: center; position: relative; max-width: 1200px; margin: 0 auto; }
-        
-        /* FIXED: Heavy Double Color Studio Font Face Setup */
         .hero h1 { font-size: 42px; margin-bottom: 15px; font-weight: 900; letter-spacing: -2px; line-height: 1.05; color: #ffffff; }
         @media(min-width: 768px) { .hero h1 { font-size: 85px; } }
         .hero h1 span { background: linear-gradient(90deg, #ffffff 45%, var(--premiere-purple) 55%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* Software Badges Sub-Bar */
         .software-bar { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 35px; }
-        .software-tag { font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 1px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
-        .tag-pr { border-color: #ea77ff; color: #ea77ff; }
-        .tag-ae { border-color: #9c9eff; color: #9c9eff; }
-        .tag-dv { border-color: #ffb834; color: #ffb834; }
+        .software-tag { font-size: 11px; font-weight: 700; padding: 6px 14px; border-radius: 6px; text-transform: uppercase; letter-spacing: 1px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); transition: transform 0.3s; }
+        .software-tag:hover { transform: scale(1.1); }
+        .tag-pr { border-color: #9055ff; color: #9055ff; }
+        .tag-ae { border-color: #bb86fc; color: #bb86fc; }
+        .tag-dv { border-color: #ffaa00; color: #ffaa00; }
         .tag-il { border-color: #ff9a00; color: #ff9a00; }
         .tag-cr { border-color: #00ca6d; color: #00ca6d; }
+        .tag-an { border-color: #ff4a5a; color: #ff4a5a; }
+        .tag-fg { border-color: #0acf83; color: #0acf83; }
 
         .story-container { max-width: 850px; margin: 0 auto 40px auto; padding: 15px; line-height: 1.8; font-size: 15px; color: var(--text-sub); text-align: center; background: rgba(20, 23, 30, 0.4); border-radius: 16px; border: 1px solid rgba(255,255,255,0.03); }
         @media(min-width: 768px) { .story-container { font-size: 19px; line-height: 1.9; } }
@@ -100,61 +97,68 @@
         .nav-btn { background: rgba(255, 255, 255, 0.02); color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 22px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; border-radius: 6px; cursor: pointer; margin-bottom: 30px; transition: 0.3s; text-transform: uppercase; }
         .nav-btn:hover { background: rgba(144, 85, 255, 0.15); border-color: var(--premiere-purple); }
         
-        .categories-grid { display: grid; grid-template-columns: 1fr; gap: 30px; max-width: 1150px; margin: 0 auto; }
-        @media(min-width: 768px) { .categories-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; } }
+        .categories-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 1200px; margin: 0 auto; }
         
-        /* FIXED: 3 Main Workspace Cards with Rich Ambient Cinematic Grow Glow */
         .box-card { 
             background: var(--panel-bg); 
-            border-radius: 16px; 
-            padding: 45px 25px; 
+            border-radius: 14px; 
+            padding: 30px 20px; 
             border: 1px solid rgba(255,255,255,0.04); 
             text-align: center; 
             cursor: pointer; 
-            min-height: 300px; 
+            min-height: 220px; 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
             justify-content: center; 
-            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
             position: relative;
             overflow: hidden;
         }
-        /* Ambient Background Light Engine */
+
         .box-card::before {
             content: '';
             position: absolute;
             top: 50%;
             left: 50%;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, var(--premiere-purple) 0%, transparent 70%);
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
             opacity: 0;
-            transform: translate(-50%, -50%) scale(0.6);
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translate(-50%, -50%) scale(0.5);
+            transition: all 0.5s ease;
             z-index: 1;
             pointer-events: none;
         }
-        .box-card:nth-child(2)::before { background: radial-gradient(circle, var(--ae-indigo) 0%, transparent 70%); }
-        .box-card:nth-child(3)::before { background: radial-gradient(circle, var(--davinci-gold) 0%, transparent 70%); }
+
+        .box-card[data-glow="pr"]::before { background: radial-gradient(circle, rgba(144, 85, 255, 0.4) 0%, transparent 75%); }
+        .box-card[data-glow="ae"]::before { background: radial-gradient(circle, rgba(187, 134, 252, 0.4) 0%, transparent 75%); }
+        .box-card[data-glow="dv"]::before { background: radial-gradient(circle, rgba(255, 170, 0, 0.4) 0%, transparent 75%); }
+        .box-card[data-glow="il"]::before { background: radial-gradient(circle, rgba(255, 154, 0, 0.4) 0%, transparent 75%); }
+        .box-card[data-glow="cr"]::before { background: radial-gradient(circle, rgba(0, 202, 109, 0.4) 0%, transparent 75%); }
+        .box-card[data-glow="an"]::before { background: radial-gradient(circle, rgba(255, 74, 90, 0.4) 0%, transparent 75%); }
+        .box-card[data-glow="fg"]::before { background: radial-gradient(circle, rgba(10, 207, 131, 0.4) 0%, transparent 75%); }
+        .box-card[data-glow="story"]::before { background: radial-gradient(circle, rgba(0, 243, 255, 0.4) 0%, transparent 75%); }
 
         .box-card:hover { 
-            border-color: rgba(255,255,255,0.12);
-            transform: translateY(-8px); 
+            border-color: rgba(255,255,255,0.15);
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
-        /* Activating Cinematic Glow Expansion on Hover */
+        
         .box-card:hover::before {
-            opacity: 0.35;
+            opacity: 0.8;
             width: 100%;
             height: 100%;
-            transform: translate(-50%, -50%) scale(1.5);
+            transform: translate(-50%, -50%) scale(1.4);
         }
         
-        .box-icon { font-size: 46px; margin-bottom: 20px; display: inline-block; transition: transform 0.4s ease; z-index: 2; }
-        .box-card:hover .box-icon { transform: scale(1.18); }
+        .box-icon { font-size: 38px; margin-bottom: 15px; display: inline-block; transition: transform 0.4s ease; z-index: 2; }
+        .box-card:hover .box-icon { transform: scale(1.25) rotate(5deg); }
         
-        .box-card h3 { font-size: 22px; margin-bottom: 12px; color: var(--text-main); letter-spacing: -0.5px; z-index: 2; }
-        .box-card p { font-size: 13.5px; color: var(--text-sub); line-height: 1.6; text-transform: none; z-index: 2; }
+        .box-card h3 { font-size: 18px; margin-bottom: 8px; color: var(--text-main); letter-spacing: -0.5px; z-index: 2; }
+        .box-card p { font-size: 12.5px; color: var(--text-sub); line-height: 1.5; text-transform: none; z-index: 2; }
 
         .cinematic-grid-track { display: grid; grid-template-columns: 1fr; gap: 25px; width: 100%; max-width: 1050px; margin: 0 auto; }
         @media(min-width: 768px) { .cinematic-grid-track { grid-template-columns: repeat(2, 1fr); gap: 30px; } }
@@ -182,7 +186,6 @@
 </head>
 <body>
 
-    <!-- Overlay Loading Sequence -->
     <div id="welcome-splash-overlay">
         <div class="intro-logo-box" onclick="exitWelcomeIntro()">MG</div>
         <div class="intro-welcome-text">Production Space Initialized</div>
@@ -200,13 +203,14 @@
     <section class="hero" id="home-section">
         <h1>Hi, I am <span>Mohit Gaur</span></h1>
         
-        <!-- Software Track Bar Indicator -->
         <div class="software-bar">
             <span class="software-tag tag-pr">Premiere Pro</span>
             <span class="software-tag tag-ae">After Effects</span>
             <span class="software-tag tag-dv">DaVinci Resolve</span>
             <span class="software-tag tag-il">Illustrator</span>
             <span class="software-tag tag-cr">CorelDraw</span>
+            <span class="software-tag tag-an">Adobe Animation</span>
+            <span class="software-tag tag-fg">Figma</span>
         </div>
 
         <div class="story-container" id="interactive-story-box">
@@ -219,20 +223,45 @@
         <button class="nav-btn" onclick="goBackToHome(); triggerCinematicSound();">← Close Timeline</button>
         <h2 class="section-title">Select <span>Production Track</span></h2>
         <div class="categories-grid">
-            <div class="box-card" onclick="openTimeline('edit', 'Video Editing'); triggerCinematicSound();">
+            <div class="box-card" data-glow="pr" onclick="openTimeline('pr', 'Premiere Pro Workspace'); triggerCinematicSound();">
                 <div class="box-icon">🎬</div>
-                <h3>Video Editing</h3>
-                <p>High frame-rate cutting, professional speed ramping, and high-end sound design.</p>
+                <h3>Premiere Pro</h3>
+                <p>High frame-rate editing, professional speed ramping & complex sound designs.</p>
             </div>
-            <div class="box-card" onclick="openTimeline('story', 'Digital Storytelling'); triggerCinematicSound();">
+            <div class="box-card" data-glow="ae" onclick="openTimeline('ae', 'After Effects Workspace'); triggerCinematicSound();">
+                <div class="box-icon">⚡</div>
+                <h3>After Effects</h3>
+                <p>Advanced visual effects, dynamic text tracking, and cinematic motion designs.</p>
+            </div>
+            <div class="box-card" data-glow="dv" onclick="openTimeline('dv', 'DaVinci Resolve Workspace'); triggerCinematicSound();">
+                <div class="box-icon">🎨</div>
+                <h3>DaVinci Resolve</h3>
+                <p>Hollywood-grade color grading, node architectures, and deep color correction.</p>
+            </div>
+            <div class="box-card" data-glow="il" onclick="openTimeline('il', 'Illustrator Studio'); triggerCinematicSound();">
+                <div class="box-icon">📐</div>
+                <h3>Illustrator</h3>
+                <p>Scalable brand identities, flat vector visuals, and beautiful custom logos.</p>
+            </div>
+            <div class="box-card" data-glow="cr" onclick="openTimeline('cr', 'CorelDraw Workspace'); triggerCinematicSound();">
+                <div class="box-icon">✒️</div>
+                <h3>CorelDraw</h3>
+                <p>Production-level print templates, precise vector tracing, and geometric design layouts.</p>
+            </div>
+            <div class="box-card" data-glow="an" onclick="openTimeline('an', 'Adobe Animation Suite'); triggerCinematicSound();">
+                <div class="box-icon">👾</div>
+                <h3>Adobe Animation</h3>
+                <p>Fluid character animations, hand-drawn vector dynamics, and 2D storytelling.</p>
+            </div>
+            <div class="box-card" data-glow="fg" onclick="openTimeline('fg', 'Figma Interface Labs'); triggerCinematicSound();">
+                <div class="box-icon">❖</div>
+                <h3>Figma</h3>
+                <p>Interactive UI/UX design components, app flow prototyping, and asset designs.</p>
+            </div>
+            <div class="box-card" data-glow="story" onclick="openTimeline('story', 'Digital Storytelling Hub'); triggerCinematicSound();">
                 <div class="box-icon">🚀</div>
                 <h3>Digital Storytelling</h3>
-                <p>Comprehensive script outlines, dynamic hooks, and pacing structures.</p>
-            </div>
-            <div class="box-card" onclick="openTimeline('act', 'Acting & Direction'); triggerCinematicSound();">
-                <div class="box-icon">🎭</div>
-                <h3>Acting & Direction</h3>
-                <p>Multi-character performance orchestration and cinematic narrative timing.</p>
+                <p>Comprehensive script outlines, high-retention hooks, and pacing structures.</p>
             </div>
         </div>
     </section>
@@ -270,14 +299,11 @@
                 
                 let osc = audioCtx.createOscillator();
                 let gain = audioCtx.createGain();
-                
                 osc.type = 'sine'; 
                 osc.frequency.setValueAtTime(440, audioCtx.currentTime);
                 osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.15);
-                
                 gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-                
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
                 osc.start();
@@ -332,9 +358,7 @@
                 let parts = sanitizedUrl.split('/');
                 let shortcode = '';
                 let idx = parts.findIndex(p => p === 'reel' || p === 'p' || p === 'tv');
-                
                 if(idx !== -1 && parts[idx+1]) { shortcode = parts[idx+1]; } else { shortcode = parts[parts.length - 1]; }
-                
                 embedCode = `<iframe src="https://www.instagram.com/p/${shortcode}/embed/" allowtransparency="true" frameborder="0" scrolling="no" allowfullscreen="true" style="width:100%; height:100%;"></iframe>`;
                 return { html: embedCode, type: 'reel-mode' };
             }
@@ -400,7 +424,7 @@
                 }
                 
                 if(!hasAssets) {
-                    workspace.innerHTML = `<div style="color:var(--text-muted);text-align:center;padding:40px;width:100%;">Timeline sequence is empty. Awaiting deployment...</div>`;
+                    workspace.innerHTML = `<div style="color:var(--text-sub);text-align:center;padding:40px;width:100%;">Timeline sequence is empty. Awaiting deployment...</div>`;
                 }
             });
         }
